@@ -61,7 +61,7 @@ def  _plot_image(ax, img):
 
 
 def _plot_prediction_bar(ax, r):
-    perf = list(c[1] for c in r.json()['result'][0]['image'])
+    perf = list(c[1] for c in r.json()[0]['image'])
     ax.barh(range(3, 0, -1), perf, align='center', color='#55DD55')
     ax.tick_params(axis='both',       
                    which='both',      
@@ -70,7 +70,7 @@ def _plot_prediction_bar(ax, r):
                    left=False,
                    right=False,
                    labelbottom=False) 
-    tick_labels = reversed(list(' '.join(c[0].split()[1:]).split(',')[0] for c in r.json()['result'][0]['image']))
+    tick_labels = reversed(list(' '.join(c[0].split()[1:]).split(',')[0] for c in r.json()[0]['image']))
     ax.yaxis.set_ticks([1,2,3])
     ax.yaxis.set_ticklabels(tick_labels, position=(0.5,0), minor=False, horizontalalignment='center')
 
@@ -108,3 +108,13 @@ def gen_variations_of_one_image(IMAGEURL, num, label='image'):
         b64img = to_base64(diff_img)
         out_images.append(json.dumps({'input':{label:'\"{0}\"'.format(b64img)}}))
     return out_images
+
+def wait_until_container_ready(somepredicate, timeout, period=0.25, *args, **kwargs):
+    mustend = time.time() + timeout
+    while time.time() < mustend:
+        if somepredicate(*args, **kwargs): return True
+        time.sleep(period)
+    return False
+
+def wait_until():
+    pass
