@@ -61,7 +61,9 @@ def  _plot_image(ax, img):
 
 
 def _plot_prediction_bar(ax, r):
-    perf = list(c[1] for c in r.json()[0]['image'])
+    # perf = list(c[1] for c in r.json()[0]['image'])
+    perf = list(c[2] for c in r.json()[0]['image'])
+    perf = [float(i) for i in perf]
     ax.barh(range(3, 0, -1), perf, align='center', color='#55DD55')
     ax.tick_params(axis='both',       
                    which='both',      
@@ -70,9 +72,11 @@ def _plot_prediction_bar(ax, r):
                    left=False,
                    right=False,
                    labelbottom=False) 
-    tick_labels = reversed(list(' '.join(c[0].split()[1:]).split(',')[0] for c in r.json()[0]['image']))
+    # tick_labels = reversed(list(' '.join(c[0].split()[1:]).split(',')[0] for c in r.json()[0]['image']))
+    tick_labels = reversed(list(c[1] for c in r.json()[0]['image']))
     ax.yaxis.set_ticks([1,2,3])
     ax.yaxis.set_ticklabels(tick_labels, position=(0.5,0), minor=False, horizontalalignment='center')
+
 
     
 def plot_predictions(images, classification_results):
@@ -88,6 +92,8 @@ def plot_predictions(images, classification_results):
         _plot_image(ax, img)
         ax = fig.add_subplot(gg2[3, 1:9])
         _plot_prediction_bar(ax, r)
+
+
         
 def write_json_to_file(json_dict, filename, mode='w'):
     with open(filename, mode) as outfile:
