@@ -2,7 +2,7 @@
 
 
 ## Prerequisites
-1. Linux(Ubuntu).
+1. Linux(Ubuntu) with GPU enabled.
 2. [Anaconda Python](https://www.anaconda.com/download)
 3. [Docker](https://docs.docker.com/v17.12/install/linux/docker-ee/ubuntu) installed.
 4. [Azure account](https://azure.microsoft.com).
