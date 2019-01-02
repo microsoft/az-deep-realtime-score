@@ -1,6 +1,13 @@
 # Deploy Deep Learning CNN on Kubernetes Cluster with GPUs - Keras
 
+To get started with the tutorial, please proceed with following steps **in sequential order**.
 
+ * [Prerequisites](#prerequisites)
+ * [Setup](#setup)
+ * [Steps](#steps)
+ * [Cleaning up](#cleanup)
+
+<a id='prerequisites'></a>
 ## Prerequisites
 1. Linux(Ubuntu) with GPU enabled.
 2. [Anaconda Python](https://www.anaconda.com/download)
@@ -11,6 +18,7 @@ The tutorial was developed on an [Azure Ubuntu
 DSVM](https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/dsvm-ubuntu-intro),
 which addresses the first three prerequisites.
 
+<a id='setup'></a>
 ## Setup
 To set up your environment to run these notebooks, please follow these steps.  They setup the notebooks to use Docker and Azure seamlessly.
 1. Create a _Linux_ DSVM (NC6 or above to use GPU).
@@ -22,6 +30,8 @@ To set up your environment to run these notebooks, please follow these steps.  T
    ```
    sudo usermod -aG docker $USER
    ```
+To veriy if you have correct configrations, try executing `docker ps` command. You should not get any `permission denied` errors.
+
 4. Navigate to _./AKSDeploymentTutorial\_AML/Keras\_Tensorflow_ directory
 
 5. Create the Python virtual environment using the tutorial_env.yml:
@@ -45,11 +55,13 @@ To set up your environment to run these notebooks, please follow these steps.  T
    jupyter notebook
    ```
 
+<a id='steps'></a>
 ## Steps
-After following the setup instructions above, run the Jupyter notebooks in order starting with the first notebook.
+After following the setup instructions above, run the Jupyter notebooks in order starting with the first notebook [00_AMLSetup.ipybn](./00_AMLSetup.ipynb).
 
+<a id='cleanup'></a>
 ## Cleaning up
-To remove the conda environment created see [here](https://conda.io/docs/commands/env/conda-env-remove.html). The last Jupyter notebook also gives details on deleting Azure resources associated with this repository.
+To remove the conda environment created see [here](https://conda.io/docs/commands/env/conda-env-remove.html). The [last Jupyter notebook](./07_TearDown.ipynb)  also gives details on deleting Azure resources associated with this repository.
 
 # Contributing
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
