@@ -30,7 +30,7 @@ To set up your environment to run these notebooks, please follow these steps.  T
    ```
    sudo usermod -aG docker $USER
    ```
-   To veriy whether you have correct configrations, try executing `docker ps` command. You should not get `permission denied` errors.
+   To verify whether you have correct configuration, try executing `docker ps` command. You should not get `permission denied` errors.
 
 4. Navigate to _./AKSDeploymentTutorial\_AML/Keras\_Tensorflow_ directory
 
