@@ -30,7 +30,7 @@ To set up your environment to run these notebooks, please follow these steps.  T
    ```
    sudo usermod -aG docker $USER
    ```
-To veriy if you have correct configrations, try executing `docker ps` command. You should not get any `permission denied` errors.
+   To veriy whether you have correct configrations, try executing `docker ps` command. You should not get `permission denied` errors.
 
 4. Navigate to _./AKSDeploymentTutorial\_AML/Keras\_Tensorflow_ directory
 
@@ -57,7 +57,7 @@ To veriy if you have correct configrations, try executing `docker ps` command. Y
 
 <a id='steps'></a>
 ## Steps
-After following the setup instructions above, run the Jupyter notebooks in order starting with the first notebook [00_AMLSetup.ipybn](./00_AMLSetup.ipynb).
+After following the setup instructions above, run the Jupyter notebooks in order starting with the first notebook [00_AMLSetup.ipynb](./00_AMLSetup.ipynb).
 
 <a id='cleanup'></a>
 ## Cleaning up
