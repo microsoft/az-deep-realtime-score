@@ -26,7 +26,7 @@ To set up your environment to run these notebooks, please follow these steps.  T
    ```
    git clone https://github.com/Microsoft/AKSDeploymentTutorial_AML.git
    ```
-3. Add your user to the docker group: 
+3. Add your user to the docker group (after executing this command, exit and start a new bash shell): 
    ```
    sudo usermod -aG docker $USER
    ```
