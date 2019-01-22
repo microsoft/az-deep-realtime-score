@@ -61,7 +61,7 @@ After following the setup instructions above, run the Jupyter notebooks in order
 
 <a id='cleanup'></a>
 ## Cleaning up
-To remove the conda environment created see [here](https://conda.io/docs/commands/env/conda-env-remove.html). The [last Jupyter notebook](./07_TearDown.ipynb)  also gives details on deleting Azure resources associated with this repository.
+To remove the conda environment created see [here](https://conda.io/projects/continuumio-conda/en/latest/commands/remove.html). The [last Jupyter notebook](./07_TearDown.ipynb)  also gives details on deleting Azure resources associated with this repository.
 
 # Contributing
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
