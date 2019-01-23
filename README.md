@@ -20,16 +20,15 @@ In this repository there are a number of tutorials in Jupyter notebooks that hav
  * Cleaning up resources
  
 ## Design
-![alt text](static/Design.png "Design")
 
-### Below content need to be modified after adding the architecture diagram.
 The application we will develop is a simple image classification service, where we will submit an image and get back what class the image belongs to. The application flow for the deep learning model is as follows:
-1)	The client sends a HTTP POST request with the encoded image data.
-2)	The Flask app extracts the image from the request.
-3)	The image is then appropriately preprocessed and sent to the model for scoring.
-4)	The scoring result is then piped into a JSON object and returned to the client.
+1)	Deep learning model is registered to AML model registry.
+2)	AML creates a docker image including the model and scoring script.
+3)	AML deploys the scoring image on Azure Kubernetes Service (AKS) as a web service.
+4)	The client sends a HTTP POST request with the encoded image data.
+5)	The web service created by AML preprocesses the image data and sends it to the model for scoring.
+6)	The predicted categories with their scores are then returned to the client.
 
-If you already have a Docker image that you would like to deploy you can skip the first four notebooks.
 
 **NOTE**: The tutorial goes through step by step how to deploy a deep learning model on Azure; it **does** **not** include enterprise best practices such as securing the endpoints and setting up remote logging etc. 
 
