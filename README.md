@@ -5,7 +5,7 @@
 In this repository there are a number of tutorials in Jupyter notebooks that have step-by-step instructions on how to deploy a pretrained deep learning model on a GPU enabled Kubernetes cluster throught Azure Machine Learning (AML). The tutorials cover how to deploy models from the following deep learning frameworks:
 
 * [Keras (TensorFlow backend)](Keras_Tensorflow)
-* [Pytorch](Pytorch)
+* [Pytorch](Pytorch) (coming soon)
 
 ![alt text](static/example.png "Example Classification")
  
@@ -40,7 +40,7 @@ The application we will develop is a simple image classification service, where 
 Please find out the Prerequisites and Setup procedures for different networks:
 
 * [Keras (TensorFlow backend)](Keras_Tensorflow)
-* [Pytorch](Pytorch)
+* [Pytorch](Pytorch) (coming soon)
 
 
 
