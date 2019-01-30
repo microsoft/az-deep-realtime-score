@@ -1,6 +1,6 @@
 ### Authors: Yan Zhang, Mathew Salvaris, and Fidan Boylu Uz
 
-# Deploy Deep Learning CNN on Kubernetes Cluster with GPUs - AML version
+# Deploy Deep Learning CNN on Kubernetes Cluster with GPUs using Azure Machine Learning
 ## Overview
 In this repository there are a number of tutorials in Jupyter notebooks that have step-by-step instructions on how to deploy a pretrained deep learning model on a GPU enabled Kubernetes cluster throught Azure Machine Learning (AML). The tutorials cover how to deploy models from the following deep learning frameworks:
 
@@ -21,14 +21,13 @@ In this repository there are a number of tutorials in Jupyter notebooks that hav
  
 ## Design
 
-The application we will develop is a simple image classification service, where we will submit an image and get back what class the image belongs to. The application flow for the deep learning model is as follows:
+As described on the associated [Azure Reference Architecture page](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/ai/realtime-scoring-python), the application we will develop is a simple image classification service, where we will submit an image and get back what class the image belongs to. The application flow for the deep learning model is as follows:
 1)	Deep learning model is registered to AML model registry.
 2)	AML creates a docker image including the model and scoring script.
 3)	AML deploys the scoring image on Azure Kubernetes Service (AKS) as a web service.
 4)	The client sends a HTTP POST request with the encoded image data.
 5)	The web service created by AML preprocesses the image data and sends it to the model for scoring.
 6)	The predicted categories with their scores are then returned to the client.
-
 
 **NOTE**: The tutorial goes through step by step how to deploy a deep learning model on Azure; it **does** **not** include enterprise best practices such as securing the endpoints and setting up remote logging etc. 
 
