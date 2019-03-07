@@ -9,6 +9,13 @@ import toolz
 from PIL import Image, ImageOps
 import random
 
+from azureml.core.authentication import ServicePrincipalAuthentication
+from azureml.core.authentication import AzureCliAuthentication
+from azureml.core.authentication import InteractiveLoginAuthentication
+from azureml.core.authentication import AuthenticationException
+from dotenv import set_key, get_key
+import logging
+
 def read_image_from(url):
     return toolz.pipe(url, 
                       urllib.request.urlopen,
