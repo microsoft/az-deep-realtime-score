@@ -6,29 +6,35 @@
 trigger:
 - master
 
-pool:
-  name: AKSDeployment
-  vmImage: 'GpuSelfHostedAgent'
+variables:
+- group: AzureKeyVault
 
-steps:
-- script: echo Hello, AKSDeployment!
-  displayName: 'Run a one-line script'
+jobs:
+- job: MLAKSDeployAMLJob
+  timeoutInMinutes: 300
+  cancelTimeoutInMinutes: 2
+  pool:
+    name: AKSDeployment
+    vmImage: 'GpuSelfHostedAgent'
 
-- bash: |
+  steps:
+  - script: echo Hello, AKSDeployment!
+    displayName: 'Builds source for AKSDeploymentTutorialAML/Keras_Tensorflow'
+
+  - bash: |
       source /usr/share/miniconda/etc/profile.d/conda.sh
       which conda
       cd Keras_Tensorflow
       conda env create -f tutorial_env.yml
       conda activate tutorial_env
       conda env list  
-     # echo Login Azure Account
-     # az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
-  displayName: 'Build Configuration'
+      echo Login Azure Account
+      az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
+    displayName: 'Build Configuration'
 
-- bash: |
+  - bash: |
       source /usr/share/miniconda/etc/profile.d/conda.sh
-      conda deactivate
       conda remove -n 'tutorial_env' --all -q --force -y
       conda env list  
-  displayName: 'Cleanup Task'
-  condition: always()
+    displayName: 'Cleanup Task'
+    condition: always()
