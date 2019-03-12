@@ -23,11 +23,12 @@ steps:
       conda env list  
      # echo Login Azure Account
      # az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
-  displayName: '00_AML_Configuration.ipynb'
+  displayName: 'Build Configuration'
 
 - bash: |
       source /usr/share/miniconda/etc/profile.d/conda.sh
-      conda remove -n tutorial_env
+      conda deactivate
+      conda remove -n 'tutorial_env' --all -q --force -y
       conda env list  
   displayName: 'Cleanup Task'
   condition: always()
