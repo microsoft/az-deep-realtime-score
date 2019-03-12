@@ -4,7 +4,10 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+  batch: true
+  branches:
+    include:
+    - master
 
 variables:
 - group: AzureKeyVault
@@ -34,7 +37,17 @@ jobs:
 
   - bash: |
       source /usr/share/miniconda/etc/profile.d/conda.sh
+      echo Remove Conda Environment
       conda remove -n 'tutorial_env' --all -q --force -y
       conda env list  
+      echo Ensure Resource Group Deletion
+       existResponse=$(az group exists -n $(azureresourcegroup))
+      if [ "$existResponse" == "true" ]; then
+        echo Deleting project resource group  
+        az group delete --name $(azureresourcegroup) --yes
+      else
+        echo Project resource group did not exist
+      fi
+      echo Done Cleanup
     displayName: 'Cleanup Task'
     condition: always()
