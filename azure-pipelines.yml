@@ -33,6 +33,7 @@ jobs:
       conda env list  
       echo Login Azure Account
       az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
+      az account set --subscription $(subscriptionid)
     displayName: 'Build Configuration'
 
   - bash: |
