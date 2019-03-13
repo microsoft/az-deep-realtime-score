@@ -41,7 +41,7 @@ jobs:
 
       echo Put in some code here.....
       echo Parameters can be found in the Library section.
-      papermill 00_AMLSetup.ipynb 00_AMLSetup_output.ipynb --log-output --no-progress-bar -k python3 -p -p resource_group $(azureresourcegroup) -p workspace_name $(workspacename) -p workspace_region  $(azureregion)
+      papermill 00_AMLSetup.ipynb 00_AMLSetup_output.ipynb --log-output --no-progress-bar -k python3 -p resource_group $(azureresourcegroup) -p workspace_name $(workspacename) -p workspace_region  $(azureregion)
     displayName : '00_AMLSetup.ipynb'
 
 
