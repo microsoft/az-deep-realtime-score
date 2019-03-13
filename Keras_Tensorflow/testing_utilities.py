@@ -132,24 +132,13 @@ def wait_until_container_ready(somepredicate, timeout, period=0.25, *args, **kwa
 def wait_until():
     pass
 
-def get_auth(env_path):
+def get_auth():
     logger = logging.getLogger(__name__)
-    if get_key(env_path, 'password') != "YOUR_SERVICE_PRINCIPAL_PASSWORD":
-        logger.debug("Trying to create Workspace with Service Principal")
-        aml_sp_password = get_key(env_path, 'password')
-        aml_sp_tennant_id = get_key(env_path, 'tenant_id')
-        aml_sp_username = get_key(env_path, 'username')
-        auth = ServicePrincipalAuthentication(
-            tenant_id=aml_sp_tennant_id,
-            username=aml_sp_username,
-            password=aml_sp_password
-        )
-    else:
-        logger.debug("Trying to create Workspace with CLI Authentication")
-        try:
-            auth = AzureCliAuthentication()
-            auth.get_authentication_header()
-        except AuthenticationException:
-            logger.debug("Trying to create Workspace with Interactive login")
-            auth = InteractiveLoginAuthentication()
+    logger.debug("Trying to create Workspace with CLI Authentication")
+    try:
+        auth = AzureCliAuthentication()
+        auth.get_authentication_header()
+    except AuthenticationException:
+        logger.debug("Trying to create Workspace with Interactive login")
+        auth = InteractiveLoginAuthentication()
     return auth
