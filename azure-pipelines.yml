@@ -103,7 +103,7 @@ jobs:
        existResponse=$(az group exists -n $(azureresourcegroup))
       if [ "$existResponse" == "true" ]; then
         echo Deleting project resource group  
-        az group delete --name $(azureresourcegroup) --yes
+        #az group delete --name $(azureresourcegroup) --yes
       else
         echo Project resource group did not exist
       fi
