@@ -2,6 +2,7 @@ import base64
 import json
 import urllib
 from io import BytesIO
+import time
 
 import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
@@ -142,3 +143,26 @@ def get_auth():
         logger.debug("Trying to create Workspace with Interactive login")
         auth = InteractiveLoginAuthentication()
     return auth
+
+def wait_until_ready(endpoint,max_attempts):
+    
+    code=0
+    attempts=0
+    
+    while(code != 200):
+        attempts += 1
+        if(attempts == max_attempts):
+            print("Unable to connect to endpoint, quitting")
+            raise Exception("Endpoint unavailable in " + str(max_attempts) + " attempts.")
+            break
+        try:
+            code = urllib.request.urlopen(endpoint).getcode()
+        except Exception as error:
+            print("Exception caught opening endpoint :" + str(endpoint) + " " + str(error))
+
+        if(code != 200):
+            print("Endpoint unavailable, waiting")
+            time.sleep(10)
+
+    output_str = "We are all done with code " + str(code) 
+    return output_str
