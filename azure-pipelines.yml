@@ -97,8 +97,8 @@ jobs:
   - bash: |
       source /usr/share/miniconda/etc/profile.d/conda.sh
       echo Remove All Docker Containers
-      docker stop $(docker ps -a -q)
-      docker rm $(docker ps -a -q)
+      # docker stop $(docker ps -a -q)
+      # docker rm $(docker ps -a -q)
       
       echo Remove Conda Environment
       conda remove -n 'tutorial_env' --all -q --force -y
