@@ -42,7 +42,7 @@ jobs:
       source /usr/share/miniconda/etc/profile.d/conda.sh
       source activate tutorial_env
       cd Keras_Tensorflow
-      papermill 00_AMLSetup.ipynb 00_AMLSetup_output.ipynb --log-output --no-progress-bar -k python3 -p resource_group $(azureresourcegroup) -p workspace_name $(workspacename) -p workspace_region  $(azureregion) -p subscription_id $(subscriptionid) -p model_name 'resnet_model' -p image_name 'modelimg' -p aks_name 'aksdeployamlaks' -p aks_service_name 'aksamlsvc' -p aks_location $(azureregion)
+      papermill 00_AMLSetup.ipynb 00_AMLSetup_output.ipynb --log-output --no-progress-bar -k python3 -p resource_group $(azureresourcegroup) -p workspace_name $(workspacename) -p workspace_region  $(azureregion) -p subscription_id $(subscriptionid) -p image_name 'modelimg' -p aks_name 'aksdeployamlaks' -p aks_service_name 'aksamlsvc' -p aks_location $(azureregion)
     displayName : '00_AMLSetup.ipynb'
 
   - bash: |
