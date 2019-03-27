@@ -37,17 +37,8 @@ endif
 test-notebook1:
 	source activate tutorial_env
 	cd notebooks
-	@echo Testing 01_local_testing.ipynb
-	papermill 01_local_testing.ipynb test.ipynb \
-		--log-output \
-		--no-progress-bar \
-		-k python3
-
-test-notebook2:
-	source activate tutorial_env
-	cd notebooks
-	@echo Testing 02_setup_aml.ipynb
-	papermill 02_setup_aml.ipynb test.ipynb \
+	@echo Testing 00_AMLSetup.ipynb
+	papermill 00_AMLSetup.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
 		-k python3 \
@@ -55,7 +46,10 @@ test-notebook2:
 		-p resource_group ${RESOURCE_GROUP} \
 		-p workspace_name ${WORKSPACE_NAME} \
 		-p workspace_region ${WORKSPACE_REGION} \
-		-p storage_account_name ${STORAGE_ACCOUNT_NAME}
+		-p image_name ${IMAGE_NAME} \
+		-p aks_name ${AKS_NAME} \
+		-p aks_location ${WORKSPACE_REGION} \
+		-p aks_service_name ${AKS_SERVICE_NAME}
 
 test-notebook3:
 	source activate tutorial_env
