@@ -20,7 +20,8 @@ help:
 	echo "$$PROJECT_HELP_MSG" | less
 
 
-test: setup test-notebook1 test-notebook2 test-notebook3 test-notebook4 test-notebook5
+test: setup test-notebook1 test-notebook2 test-notebook3 test-notebook4 test-notebook5 test-notebook6 test-notebook7 \
+	test-notebook8
 	@echo All Notebooks Passed
 
 setup:
@@ -36,7 +37,6 @@ endif
 
 test-notebook1:
 	source activate tutorial_env
-	cd notebooks
 	@echo Testing 00_AMLSetup.ipynb
 	papermill 00_AMLSetup.ipynb test.ipynb \
 		--log-output \
@@ -51,35 +51,64 @@ test-notebook1:
 		-p aks_location ${WORKSPACE_REGION} \
 		-p aks_service_name ${AKS_SERVICE_NAME}
 
+test-notebook2:
+	source activate tutorial_env
+	@echo Testing 01_DevelopModel.ipynb
+	papermill 01_DevelopModel.ipynb test.ipynb \
+		--log-output \
+		--no-progress-bar \
+		-k python3
+
 test-notebook3:
 	source activate tutorial_env
-	cd notebooks
-	@echo Testing 03_develop_pipeline.ipynb
-	papermill 03_develop_pipeline.ipynb test.ipynb \
+	@echo Testing 02_DevelopModelDriver.ipynb
+	papermill 02_DevelopModelDriver.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
 		-k python3
 
 test-notebook4:
 	source activate tutorial_env
-	cd notebooks
-	@echo Testing 04_deploy_logic_apps.ipynb
-	papermill 04_deploy_logic_apps.ipynb test.ipynb \
+	@echo Testing 03_BuildImage.ipynb
+	papermill 03_BuildImage.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
 		-k python3
 
 test-notebook5:
 	source activate tutorial_env
-	cd notebooks
-	@echo Testing 05_clean_up.ipynb
-	papermill 05_clean_up.ipynb test.ipynb \
+	@echo Testing 04_DeployOnAKS.ipynb
+	papermill 04_DeployOnAKS.ipynb test.ipynb \
+		--log-output \
+		--no-progress-bar \
+		-k python3
+
+test-notebook6:
+	source activate tutorial_env
+	@echo Testing 05_TestWebApp.ipynb
+	papermill 05_TestWebApp.ipynb test.ipynb \
+		--log-output \
+		--no-progress-bar \
+		-k python3
+
+test-notebook7:
+	source activate tutorial_env
+	@echo Testing 06_SpeedTestWebApp.ipynb
+	papermill 06_SpeedTestWebApp.ipynb test.ipynb \
+		--log-output \
+		--no-progress-bar \
+		-k python3
+
+test-notebook8:
+	source activate tutorial_env
+	@echo Testing 07_TearDown.ipynb
+	papermill 07_TearDown.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
 		-k python3
 
 remove-notebook:
-	rm -f notebooks/test.ipynb
+	rm -f test.ipynb
 
 clean: remove-notebook
 	conda remove --name tutorial_env -y --all
@@ -90,4 +119,5 @@ clean: remove-notebook
 	rm -rf __pycache__
 	rm -rf .ipynb_checkpoints
 
-.PHONY: help test setup clean remove-notebook test-notebook1 test-notebook2 test-notebook3 test-notebook4 test-notebook5
+.PHONY: help test setup clean remove-notebook test-notebook1 test-notebook2 test-notebook3 test-notebook4 \
+		test-notebook5 test-notebook6 test-notebook7 test-notebook8
