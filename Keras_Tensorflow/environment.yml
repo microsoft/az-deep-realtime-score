@@ -18,4 +18,4 @@ dependencies:
   - azure-cli==2.0.41
   - tensorflow-gpu==1.10.0
   - keras==2.2.0
-  - azureml-sdk[notebooks]==1.0.10
+  - azureml-sdk[notebooks]
