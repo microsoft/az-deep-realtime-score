@@ -28,7 +28,7 @@ jobs:
       source /usr/share/miniconda/etc/profile.d/conda.sh
       which conda
       cd Keras_Tensorflow
-      conda env create -f tutorial_env.yml
+      conda env create -f environment.yml
       source activate tutorial_env
       conda env list  
       echo Docker Setup
