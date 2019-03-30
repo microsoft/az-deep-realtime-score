@@ -113,7 +113,6 @@ remove-notebook:
 clean: remove-notebook
 	conda remove --name aks_deployment_aml -y --all
 	rm -rf aml_config
-	rm -rf aml_test_orangutan
 	rm -rf __pycache__
 	rm -rf .ipynb_checkpoints
 
