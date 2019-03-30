@@ -17,13 +17,11 @@
 
 # This notebook pulls some images and tests them against the deployed web application on AKS.
 
-import urllib
 import matplotlib.pyplot as plt
 import numpy as np
 import requests
 from testing_utilities import to_img, img_url_to_json, plot_predictions, get_auth, read_image_from
 from azureml.core.workspace import Workspace
-from azureml.core.image import Image
 from azureml.core.webservice import AksWebservice
 from dotenv import set_key, get_key, find_dotenv
 

@@ -20,17 +20,15 @@
 # +
 import asyncio
 import json
-import urllib.request
 from timeit import default_timer
 
 import aiohttp
 import matplotlib.pyplot as plt
+from azureml.core.webservice import AksWebservice
+from azureml.core.workspace import Workspace
+from dotenv import get_key, find_dotenv
 from testing_utilities import to_img, gen_variations_of_one_image, get_auth
 from tqdm import tqdm
-import requests
-from dotenv import set_key, get_key, find_dotenv
-from azureml.core.workspace import Workspace
-from azureml.core.webservice import AksWebservice
 
 # %matplotlib inline
 # -

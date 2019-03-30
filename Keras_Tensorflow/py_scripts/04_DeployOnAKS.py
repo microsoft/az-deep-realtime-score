@@ -22,31 +22,27 @@
 # - Deploy the service
 # - Test the web service
 
-# +
-import os
-import matplotlib.pyplot as plt
-import numpy as np
-from testing_utilities import to_img, img_url_to_json, plot_predictions, get_auth
-import requests
 import json
 import subprocess
-from azureml.core import Workspace
-from azureml.core.compute import AksCompute, ComputeTarget
-from azureml.core.webservice import Webservice, AksWebservice
-from azureml.core.image import Image
-from azureml.core.model import Model
-from testing_utilities import read_image_from
 
 import azureml.core
-from dotenv import set_key, get_key, find_dotenv
+
+# +
+import matplotlib.pyplot as plt
+import requests
+from azureml.core.compute import AksCompute, ComputeTarget
+from azureml.core.webservice import Webservice, AksWebservice
+from dotenv import get_key, find_dotenv
+from testing_utilities import read_image_from
+from testing_utilities import to_img, get_auth
 
 print(azureml.core.VERSION)
 # -
 
 env_path = find_dotenv(raise_error_if_not_found=True)
 
-aks_service_name = get_key(env_path, 'aks_service_name')
-aks_name = get_key(env_path, 'aks_name')
+aks_service_name = get_key(env_path, "aks_service_name")
+aks_name = get_key(env_path, "aks_name")
 
 # <a id='get_workspace'></a>
 # ## Get workspace
@@ -56,50 +52,56 @@ aks_name = get_key(env_path, 'aks_name')
 from azureml.core.workspace import Workspace
 
 ws = Workspace.from_config(auth=get_auth())
-print(ws.name, ws.resource_group, ws.location, ws.subscription_id, sep = '\n')
+print(ws.name, ws.resource_group, ws.location, ws.subscription_id, sep="\n")
 # -
 
 # <a id='provision_cluster'></a>
-# ## Provision the AKS Cluster¶ 
+# ## Provision the AKS Cluster¶
 # This is a one time setup. You can reuse this cluster for multiple deployments after it has been created. If you delete the cluster or the resource group that contains it, then you would have to recreate it. Let's first check if there are enough cores in the subscription for the cluster.
 
-vm_dict = {
-    "NC": {
-        "size": "Standard_NC6",
-        "cores": 6
-    }
-}
+vm_dict = {"NC": {"size": "Standard_NC6", "cores": 6}}
 
 vm_family = "NC"
-node_count = 3 #We need to have a minimum of 3 nodes
+node_count = 3  # We need to have a minimum of 3 nodes
 requested_cores = node_count * vm_dict[vm_family]["cores"]
 
-results = subprocess.run([
-    "az", "vm", "list-usage", 
-    "--location", get_key(env_path, "aks_location"), 
-    "--query", "[?contains(localName, '%s')].{max:limit, current:currentValue}" % (vm_family)
-], stdout=subprocess.PIPE)
-quota = json.loads(''.join(results.stdout.decode('utf-8')))
-diff = int(quota[0]['max']) - int(quota[0]['current'])
+results = subprocess.run(
+    [
+        "az",
+        "vm",
+        "list-usage",
+        "--location",
+        get_key(env_path, "aks_location"),
+        "--query",
+        "[?contains(localName, '%s')].{max:limit, current:currentValue}" % (vm_family),
+    ],
+    stdout=subprocess.PIPE,
+)
+quota = json.loads("".join(results.stdout.decode("utf-8")))
+diff = int(quota[0]["max"]) - int(quota[0]["current"])
 
 if diff <= requested_cores:
-    print("Not enough cores of NC6 in region, asking for {} but have {}".format(requested_cores, diff))
+    print(
+        "Not enough cores of NC6 in region, asking for {} but have {}".format(
+            requested_cores, diff
+        )
+    )
     raise Exception("Core Limit", "Note enough cores to satisfy request")
 print("There are enough cores, you may continue...")
 
 # +
-#Provision AKS cluster with GPU machine
-prov_config = AksCompute.provisioning_configuration(vm_size='Standard_NC6')
+# Provision AKS cluster with GPU machine
+prov_config = AksCompute.provisioning_configuration(vm_size="Standard_NC6")
 
 # Create the cluster
-aks_target = ComputeTarget.create(workspace = ws, 
-                                  name = "deploykerasaks2", 
-                                  provisioning_configuration = prov_config)
+aks_target = ComputeTarget.create(
+    workspace=ws, name=aks_name, provisioning_configuration=prov_config
+)
 
 # -
 
 # %%time
-aks_target.wait_for_completion(show_output = True)
+aks_target.wait_for_completion(show_output=True)
 print(aks_target.provisioning_state)
 print(aks_target.provisioning_errors)
 
@@ -117,37 +119,39 @@ print(aks_target.provisioning_errors)
 
 # +
 # Execute following commands if you want to delete an AKS cluster
-#aks_target = AksCompute(name=aks_name,workspace=ws)
-#aks_target.delete()
+# aks_target = AksCompute(name=aks_name,workspace=ws)
+# aks_target.delete()
 # -
 
 # <a id='deploy_ws'></a>
-# ## Deploy web service to AKS¶ 
+# ## Deploy web service to AKS¶
 
-#Deploy web service to AKS
-#Set the web service configuration (using customized configuration)
+# Deploy web service to AKS
+# Set the web service configuration (using customized configuration)
 aks_config = AksWebservice.deploy_configuration(autoscale_enabled=False, num_replicas=1)
 
 # get the image built in previous notebook
-image_name = get_key(env_path, 'image_name')
+image_name = get_key(env_path, "image_name")
 image = ws.images[image_name]
 
 aks_service_name
 
-aks_service = Webservice.deploy_from_image(workspace = ws, 
-                                           name = aks_service_name,
-                                           image = image,
-                                           deployment_config = aks_config,
-                                           deployment_target = aks_target)
+aks_service = Webservice.deploy_from_image(
+    workspace=ws,
+    name=aks_service_name,
+    image=image,
+    deployment_config=aks_config,
+    deployment_target=aks_target,
+)
 
 # %%time
-aks_service.wait_for_deployment(show_output = True)
+aks_service.wait_for_deployment(show_output=True)
 print(aks_service.state)
 
 # +
 ### debug
 # aks_service.error
-# aks_service.get_logs() 
+# aks_service.get_logs()
 
 # Excute following commands if you want to delete a web service
 # s =  Webservice(ws, aks_service_name)
@@ -155,7 +159,7 @@ print(aks_service.state)
 # -
 
 # <a id='test_ws'></a>
-# ## Test Web Service¶ 
+# ## Test Web Service¶
 # We test the web sevice by passing data.
 
 IMAGEURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Lynx_lynx_poing.jpg/220px-Lynx_lynx_poing.jpg"
@@ -163,9 +167,13 @@ plt.imshow(to_img(IMAGEURL))
 
 service_keys = aks_service.get_keys()
 headers = {}
-headers['Authorization'] = 'Bearer ' + service_keys[0]
+headers["Authorization"] = "Bearer " + service_keys[0]
 
-resp = requests.post(aks_service.scoring_uri, headers=headers, files={'image': read_image_from(IMAGEURL).read()})
+resp = requests.post(
+    aks_service.scoring_uri,
+    headers=headers,
+    files={"image": read_image_from(IMAGEURL).read()},
+)
 
 print(resp.json())
 

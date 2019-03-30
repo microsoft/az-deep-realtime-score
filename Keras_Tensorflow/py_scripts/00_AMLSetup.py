@@ -24,7 +24,7 @@ from dotenv import set_key, get_key, find_dotenv
 from pathlib import Path
 from testing_utilities import get_auth
 
-# ## Prerequisites   
+# ## Prerequisites
 #
 #
 
@@ -47,20 +47,24 @@ print("SDK Version:", azureml.core.VERSION)
 #
 # **Note**: As with other Azure services, there are limits on certain resources like cluster size associated with the Azure Machine Learning service. Please read [this article](https://docs.microsoft.com/en-us/azure/machine-learning/service/how-to-manage-quotas) on the default limits and how to request more quota.
 
-# Replace the values in the following cell with your information. If you would like to use service principal authentication as described [here](https://github.com/Azure/MachineLearningNotebooks/blob/master/how-to-use-azureml/manage-azureml-service/authentication-in-azureml/authentication-in-azure-ml.ipynb) make sure you provide the optional values as well. 
+# Replace the values in the following cell with your information. If you would like to use service principal authentication as described [here](https://github.com/Azure/MachineLearningNotebooks/blob/master/how-to-use-azureml/manage-azureml-service/authentication-in-azureml/authentication-in-azure-ml.ipynb) make sure you provide the optional values as well.
 
 # + {"tags": ["parameters"]}
 # Azure resources
-subscription_id = '<YOUR_SUBSCRIPTION_ID>'
-resource_group ='<YOUR_RESOURCE_GROUP>' # e.g. resource_group = 'myamlrg'
-workspace_name = '<YOUR_WORKSPACE_NAME>' # e.g. workspace_name = 'myamlworkspace'
-workspace_region ='<YOUR_WORKSPACE_REGION>' # e.g. workspace_region =  'eastus2'
+subscription_id = "<YOUR_SUBSCRIPTION_ID>"
+resource_group = "<YOUR_RESOURCE_GROUP>"  # e.g. resource_group = 'myamlrg'
+workspace_name = "<YOUR_WORKSPACE_NAME>"  # e.g. workspace_name = 'myamlworkspace'
+workspace_region = "<YOUR_WORKSPACE_REGION>"  # e.g. workspace_region =  'eastus2'
 
 # Docker image and Azure Kubernetes Service (AKS) Cluster - deployment compute
-image_name = '<YOUR_IMAGE_NAME>' # e.g. image_name = "image1 (avoid underscore in names)"
-aks_name = '<YOUR_AKS_NAME>' # e.g. aks_name = "my-aks-gpu1"
-aks_location = '<YOUR_AKS_LOCATION>' # e.g. aks_location = "eastus"
-aks_service_name = '<YOUR_AKS_SERVICE_NAME>' # e.g. aks_service_name ="my-aks-service-1"
+image_name = (
+    "<YOUR_IMAGE_NAME>"
+)  # e.g. image_name = "image1 (avoid underscore in names)"
+aks_name = "<YOUR_AKS_NAME>"  # e.g. aks_name = "my-aks-gpu1"
+aks_location = "<YOUR_AKS_LOCATION>"  # e.g. aks_location = "eastus"
+aks_service_name = (
+    "<YOUR_AKS_SERVICE_NAME>"
+)  # e.g. aks_service_name ="my-aks-service-1"
 # -
 
 # Create and initialize a dotenv file for storing parameters used in multiple notebooks.
@@ -71,15 +75,15 @@ if env_path == "":
     env_path = find_dotenv()
 
 # +
-set_key(env_path, 'subscription_id', subscription_id)
-set_key(env_path, 'resource_group', resource_group)
-set_key(env_path, 'workspace_name', workspace_name)
-set_key(env_path, 'workspace_region', workspace_region)
+set_key(env_path, "subscription_id", subscription_id)
+set_key(env_path, "resource_group", resource_group)
+set_key(env_path, "workspace_name", workspace_name)
+set_key(env_path, "workspace_region", workspace_region)
 
-set_key(env_path, 'image_name', image_name)
-set_key(env_path, 'aks_name', aks_name)
-set_key(env_path, 'aks_location', aks_location)
-set_key(env_path, 'aks_service_name', aks_service_name)
+set_key(env_path, "image_name", image_name)
+set_key(env_path, "aks_name", aks_name)
+set_key(env_path, "aks_location", aks_location)
+set_key(env_path, "aks_service_name", aks_service_name)
 # -
 
 # ## Create the workspace
@@ -94,15 +98,17 @@ set_key(env_path, 'aks_service_name', aks_service_name)
 
 # +
 # import the Workspace class and check the azureml SDK version
-#from azureml.core import Workspace
+# from azureml.core import Workspace
 
-ws = Workspace.create(name = workspace_name,
-                      subscription_id = subscription_id,
-                      resource_group = resource_group, 
-                      location = workspace_region,
-                      create_resource_group=True,
-                      auth=get_auth(),
-                      exist_ok=True)
+ws = Workspace.create(
+    name=workspace_name,
+    subscription_id=subscription_id,
+    resource_group=resource_group,
+    location=workspace_region,
+    create_resource_group=True,
+    auth=get_auth(),
+    exist_ok=True,
+)
 # persist the subscription id, resource group name, and workspace name in aml_config/config.json.
 ws.write_config()
 # -

@@ -22,27 +22,17 @@
 #
 
 # +
-import os
-import json
 import docker
-import requests
-import numpy as np
 import matplotlib.pyplot as plt
-from azureml.core import Workspace
-from azureml.core.compute import AksCompute, ComputeTarget
-from azureml.core.webservice import Webservice, AksWebservice
-from azureml.core.image import Image
-from azureml.core.model import Model
+import numpy as np
+import requests
+from azure.mgmt.containerregistry import ContainerRegistryManagementClient
+from azureml._model_management._util import (get_docker_client, pull_docker_image)
 from azureml.core.conda_dependencies import CondaDependencies
 from azureml.core.image import ContainerImage
-from azureml._model_management._util import (get_docker_client, pull_docker_image, get_docker_port, 
-                                             container_scoring_call, cleanup_container)
-from azureml._model_management._constants import MMS_WORKSPACE_API_VERSION
-from azure.mgmt.containerregistry import ContainerRegistryManagementClient
-from azure.mgmt import containerregistry
+from dotenv import get_key, find_dotenv
+from testing_utilities import to_img, plot_predictions, get_auth, wait_until_ready
 
-from testing_utilities import to_img, img_url_to_json, plot_predictions, get_auth, wait_until_ready
-from dotenv import set_key, get_key, find_dotenv
 # -
 
 env_path = find_dotenv(raise_error_if_not_found=True)
