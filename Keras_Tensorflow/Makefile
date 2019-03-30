@@ -119,6 +119,10 @@ clean: remove-notebook
 	rm -rf __pycache__
 	rm -rf .ipynb_checkpoints
 
+notebook:
+	source activate tutorial_env
+	jupyter notebook --port 9999 --ip 0.0.0.0 --no-browser
+
 install-jupytext:
 	source activate tutorial_env
 	conda install -c conda-forge jupytext
