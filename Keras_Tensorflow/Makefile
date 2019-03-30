@@ -36,7 +36,7 @@ endif
 
 
 test-notebook1:
-	source activate tutorial_env
+	source activate aks_deployment_aml
 	@echo Testing 00_AMLSetup.ipynb
 	papermill 00_AMLSetup.ipynb test.ipynb \
 		--log-output \
@@ -52,7 +52,7 @@ test-notebook1:
 		-p aks_service_name ${AKS_SERVICE_NAME}
 
 test-notebook2:
-	source activate tutorial_env
+	source activate aks_deployment_aml
 	@echo Testing 01_DevelopModel.ipynb
 	papermill 01_DevelopModel.ipynb test.ipynb \
 		--log-output \
@@ -60,7 +60,7 @@ test-notebook2:
 		-k python3
 
 test-notebook3:
-	source activate tutorial_env
+	source activate aks_deployment_aml
 	@echo Testing 02_DevelopModelDriver.ipynb
 	papermill 02_DevelopModelDriver.ipynb test.ipynb \
 		--log-output \
@@ -68,7 +68,7 @@ test-notebook3:
 		-k python3
 
 test-notebook4:
-	source activate tutorial_env
+	source activate aks_deployment_aml
 	@echo Testing 03_BuildImage.ipynb
 	papermill 03_BuildImage.ipynb test.ipynb \
 		--log-output \
@@ -76,7 +76,7 @@ test-notebook4:
 		-k python3
 
 test-notebook5:
-	source activate tutorial_env
+	source activate aks_deployment_aml
 	@echo Testing 04_DeployOnAKS.ipynb
 	papermill 04_DeployOnAKS.ipynb test.ipynb \
 		--log-output \
@@ -84,7 +84,7 @@ test-notebook5:
 		-k python3
 
 test-notebook6:
-	source activate tutorial_env
+	source activate aks_deployment_aml
 	@echo Testing 05_TestWebApp.ipynb
 	papermill 05_TestWebApp.ipynb test.ipynb \
 		--log-output \
@@ -92,7 +92,7 @@ test-notebook6:
 		-k python3
 
 test-notebook7:
-	source activate tutorial_env
+	source activate aks_deployment_aml
 	@echo Testing 06_SpeedTestWebApp.ipynb
 	papermill 06_SpeedTestWebApp.ipynb test.ipynb \
 		--log-output \
@@ -100,7 +100,7 @@ test-notebook7:
 		-k python3
 
 test-notebook8:
-	source activate tutorial_env
+	source activate aks_deployment_aml
 	@echo Testing 07_TearDown.ipynb
 	papermill 07_TearDown.ipynb test.ipynb \
 		--log-output \
@@ -111,7 +111,7 @@ remove-notebook:
 	rm -f test.ipynb
 
 clean: remove-notebook
-	conda remove --name tutorial_env -y --all
+	conda remove --name aks_deployment_aml -y --all
 	cd notebooks
 	./clean_up.sh
 	rm -rf aml_config
@@ -120,11 +120,11 @@ clean: remove-notebook
 	rm -rf .ipynb_checkpoints
 
 notebook:
-	source activate tutorial_env
+	source activate aks_deployment_aml
 	jupyter notebook --port 9999 --ip 0.0.0.0 --no-browser
 
 install-jupytext:
-	source activate tutorial_env
+	source activate aks_deployment_aml
 	conda install -c conda-forge jupytext
 
 convert-to-py:
