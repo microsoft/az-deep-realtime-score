@@ -112,8 +112,6 @@ remove-notebook:
 
 clean: remove-notebook
 	conda remove --name aks_deployment_aml -y --all
-	cd notebooks
-	./clean_up.sh
 	rm -rf aml_config
 	rm -rf aml_test_orangutan
 	rm -rf __pycache__
