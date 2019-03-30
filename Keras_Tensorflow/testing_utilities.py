@@ -32,12 +32,14 @@ def to_rgb(img_bytes):
 def resize(img_file, new_size=(100, 100)):
     return ImageOps.fit(img_file, new_size, Image.ANTIALIAS)
 
-
-def to_base64(img):
+def to_bytes(img, encoding='JPEG'):
     imgio = BytesIO()
-    img.save(imgio, 'PNG')
+    img.save(imgio, encoding)
     imgio.seek(0)
-    dataimg = base64.b64encode(imgio.read())
+    return imgio.read()
+    
+def to_base64(img_bytes):
+    dataimg = base64.b64encode(img_bytes)
     return dataimg.decode('utf-8')
 
 
@@ -119,8 +121,7 @@ def gen_variations_of_one_image(IMAGEURL, num, label='image'):
                           random.randint(0, diff_img.size[1]-1))
         current_color = diff_img.getpixel(rndm_pixel_x_y)
         diff_img.putpixel(rndm_pixel_x_y, current_color[::-1])
-        b64img = to_base64(diff_img)
-        out_images.append(json.dumps({'input':{label:'\"{0}\"'.format(b64img)}}))
+        out_images.append(to_bytes(diff_img))
     return out_images
 
 def wait_until_container_ready(somepredicate, timeout, period=0.25, *args, **kwargs):
