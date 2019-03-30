@@ -119,5 +119,21 @@ clean: remove-notebook
 	rm -rf __pycache__
 	rm -rf .ipynb_checkpoints
 
+install-jupytext:
+	source activate tutorial_env
+	conda install -c conda-forge jupytext
+
+convert-to-py:
+	jupytext --set-formats ipynb,py_scripts//py --sync *.ipynb
+
+sync:
+	jupytext --sync *.ipynb
+
+convert-to-ipynb:
+	jupytext --set-formats ipynb *.ipynb
+
+remove-py:
+	rm -r py_scripts
+
 .PHONY: help test setup clean remove-notebook test-notebook1 test-notebook2 test-notebook3 test-notebook4 \
 		test-notebook5 test-notebook6 test-notebook7 test-notebook8
