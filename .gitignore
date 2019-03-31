@@ -330,3 +330,7 @@ ASALocalRun/
 .mfractor/
 
 .ipynb_checkpoints
+
+# env files
+.env
+.dev_env
