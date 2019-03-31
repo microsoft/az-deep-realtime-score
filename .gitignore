@@ -334,3 +334,11 @@ ASALocalRun/
 # env files
 .env
 .dev_env
+
+# Binaries
+*.jpg
+*.h5
+
+# AML files
+aml_config
+azureml-models
