@@ -1,5 +1,5 @@
 ### Authors: Yan Zhang, Mathew Salvaris, and Fidan Boylu Uz
-
+[![Build Status](https://dev.azure.com/customai/AKSDeploymentTutorialAML/_apis/build/status/Microsoft.AKSDeploymentTutorialAML?branchName=master)](https://dev.azure.com/customai/AKSDeploymentTutorialAML/_build/latest?definitionId=11&branchName=master)
 # Deploy Deep Learning CNN on Kubernetes Cluster with GPUs - AML version
 ## Overview
 In this repository there are a number of tutorials in Jupyter notebooks that have step-by-step instructions on how to deploy a pretrained deep learning model on a GPU enabled Kubernetes cluster throught Azure Machine Learning (AML). The tutorials cover how to deploy models from the following deep learning frameworks:
