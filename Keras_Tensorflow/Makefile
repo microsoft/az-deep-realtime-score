@@ -115,6 +115,9 @@ clean: remove-notebook
 	rm -rf aml_config
 	rm -rf __pycache__
 	rm -rf .ipynb_checkpoints
+	rm *.jpg
+	rm -rf azureml-models
+	rm driver.py img_env.yml model_resnet_weights.h5
 
 notebook:
 	source activate aks_deployment_aml
