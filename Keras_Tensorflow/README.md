@@ -24,7 +24,7 @@ To set up your environment to run these notebooks, please follow these steps.  T
 1. Create a _Linux_ DSVM (NC6 or above to use GPU).
 2. Clone, fork, or download the zip file for this repository:
    ```
-   git clone https://github.com/Microsoft/AKSDeploymentTutorial_AML.git
+   git clone https://github.com/Microsoft/AKSDeploymentTutorialAML.git
    ```
 3. Add your user to the docker group (after executing this command, exit and start a new bash shell): 
    ```
@@ -34,7 +34,7 @@ To set up your environment to run these notebooks, please follow these steps.  T
 
 4. Navigate to _./AKSDeploymentTutorial\_AML/Keras\_Tensorflow_ directory
 
-5. Create the Python virtual environment using the tutorial_env.yml:
+5. Create the Python virtual environment using the environment.yml:
    ```
    conda env create -f environment.yml
    ```
