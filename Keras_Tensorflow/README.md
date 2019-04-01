@@ -36,11 +36,11 @@ To set up your environment to run these notebooks, please follow these steps.  T
 
 5. Create the Python virtual environment using the tutorial_env.yml:
    ```
-   conda env create -f tutorial_env.yml
+   conda env create -f environment.yml
    ```
 6. Activate the virtual environment:
    ```
-   source activate tutorial_env
+   source activate aks_deployment_aml
    ```
 7. Login to Azure:
    ```
