@@ -1,7 +1,4 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Pipeline for testing AKSDeploymentTutorial_AML
 
 trigger:
   batch: true
@@ -13,7 +10,7 @@ variables:
 - group: AzureKeyVault
 
 jobs:
-- job: MLAKSDeployAMLJob
+- job: AKSDeployAMLJob
   timeoutInMinutes: 300
   cancelTimeoutInMinutes: 2
   pool:
@@ -25,11 +22,9 @@ jobs:
     displayName: 'Builds source for AKSDeploymentTutorialAML/Keras_Tensorflow'
 
   - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      which conda
       cd Keras_Tensorflow
-      conda env create -f tutorial_env.yml
-      source activate tutorial_env
+      conda env create -f environment.yml
+      source activate aks_deployment_aml
       conda env list  
       echo Docker Setup
       #sudo usermod -aG docker $USER
@@ -39,69 +34,60 @@ jobs:
     displayName: 'Build Configuration'
 
   - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      source activate tutorial_env
+      source activate aks_deployment_aml
       cd Keras_Tensorflow
       papermill 00_AMLSetup.ipynb 00_AMLSetup_output.ipynb --log-output --no-progress-bar -k python3 -p resource_group $(azureresourcegroup) -p workspace_name $(workspacename) -p workspace_region  $(azureregion) -p subscription_id $(subscriptionid) -p image_name 'modelimg' -p aks_name 'aksdeployamlaks' -p aks_service_name 'aksamlsvc' -p aks_location $(azureregion)
     displayName : '00_AMLSetup.ipynb'
 
   - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      source activate tutorial_env
+      source activate aks_deployment_aml
       cd Keras_Tensorflow
-      papermill 01_DevelopModel.ipynb 01_DevelopModel_output.ipynb --log-output --no-progress-bar -k python3 
+      papermill 01_DevelopModel.ipynb 01_DevelopModel_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '01_DevelopModel.ipynb'
 
   - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      source activate tutorial_env
+      source activate aks_deployment_aml
       cd Keras_Tensorflow
-      papermill 02_DevelopModelDriver.ipynb 02_DevelopModelDriver_output.ipynb --log-output --no-progress-bar -k python3 
+      papermill 02_DevelopModelDriver.ipynb 02_DevelopModelDriver_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '02_DevelopModelDriver.ipynb'
 
   - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      source activate tutorial_env
+      source activate aks_deployment_aml
       cd Keras_Tensorflow
-      papermill 03_BuildImage.ipynb 03_BuildImage_output.ipynb --log-output --no-progress-bar -k python3 
+      papermill 03_BuildImage.ipynb 03_BuildImage_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '03_BuildImage.ipynb'
 
   - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      source activate tutorial_env
+      source activate aks_deployment_aml
       cd Keras_Tensorflow
-      papermill 04_DeployOnAKS.ipynb 04_DeployOnAKS_output.ipynb --log-output --no-progress-bar -k python3 
+      papermill 04_DeployOnAKS.ipynb 04_DeployOnAKS_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '04_DeployOnAKS.ipynb'
 
   - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      source activate tutorial_env
+      source activate aks_deployment_aml
       cd Keras_Tensorflow
-      papermill 05_TestWebApp.ipynb 05_TestWebApp_output.ipynb --log-output --no-progress-bar -k python3 
+      papermill 05_TestWebApp.ipynb 05_TestWebApp_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '05_TestWebApp.ipynb'
 
   - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      source activate tutorial_env
+      source activate aks_deployment_aml
       cd Keras_Tensorflow
-      papermill 06_SpeedTestWebApp.ipynb 06_SpeedTestWebApp_output.ipynb --log-output --no-progress-bar -k python3 
+      papermill 06_SpeedTestWebApp.ipynb 06_SpeedTestWebApp_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '06_SpeedTestWebApp.ipynb'
 
   - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      source activate tutorial_env
+      source activate aks_deployment_aml
       cd Keras_Tensorflow
-      papermill 07_TearDown.ipynb 07_TearDown_output.ipynb --log-output --no-progress-bar -k python3 
+      papermill 07_TearDown.ipynb 07_TearDown_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '07_TearDown.ipynb'
 
   - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
       echo Remove All Docker Containers
       #docker stop $(docker ps -a -q)
       #docker rm $(docker ps -a -q)
-      
+
       echo Remove Conda Environment
-      conda remove -n 'tutorial_env' --all -q --force -y
+      conda remove -n aks_deployment_aml --all -q --force -y
       conda env list  
       
       echo Ensure Resource Group Deletion
