@@ -1,0 +1,8 @@
+{  
+  "framework":"keras",
+  "project_name":"dlmodeldeploy",
+  "deployment_type": [
+      "aks",
+      "iotedge"
+  ]
+}
