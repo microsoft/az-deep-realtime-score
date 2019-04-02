@@ -1,4 +1,4 @@
-# Deploy Deep Learning CNN on Kubernetes Cluster with GPUs - Keras
+# Deploy Deep Learning CNN on IoT Edge with GPUs - Keras
 
 To get started with the tutorial, please proceed with following steps **in sequential order**.
 
@@ -54,7 +54,7 @@ To set up your environment to run these notebooks, please follow these steps.  T
    ```
    jupyter notebook
    ```
-10. Select correct kernel: set the kernel to be `Python [conda env:aks_deployment_aml]`(or `Python 3` if that option does not show).
+10. Select correct kernel: set the kernel to be `Python [conda env: aks_deployment_aml]`(or `Python 3` if that option does not show).
 
 <a id='steps'></a>
 ## Steps
