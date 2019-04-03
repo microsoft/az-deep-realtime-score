@@ -24,11 +24,11 @@ if __name__ == '__main__':
         
         if '{{ cookiecutter.deployment_type }}' == 'aks':
             remove_dir('./Keras_Tensorflow/iotedge')
-            move_files('./Keras_Tensorflow','./Keras_Tensorflow/aks')
+            move_files('./Keras_Tensorflow','./aks')
 
         if '{{ cookiecutter.deployment_type }}' == 'iotedge':
             remove_dir('./Keras_Tensorflow/aks')
-            move_files('./Keras_Tensorflow','./Keras_Tensorflow/iotedge')
+            move_files('./Keras_Tensorflow','./iotedge')
 
     else:
         remove_dir('./Keras_Tensorflow')
