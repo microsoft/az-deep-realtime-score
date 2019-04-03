@@ -15,7 +15,8 @@ def move_files(parentdir, subdir):
     root = os.path.join(PROJECT_DIRECTORY,parentdir)
     for filename in os.listdir(os.path.join(root, subdir)):
         shutil.move(os.path.join(root, subdir, filename), os.path.join(root, filename))
-        os.rmdir(os.path.join(root, subdir))
+        #os.rmdir(os.path.join(root, subdir))
+        remove_dir(os.path.join(root, subdir))
 
 if __name__ == '__main__':
 
