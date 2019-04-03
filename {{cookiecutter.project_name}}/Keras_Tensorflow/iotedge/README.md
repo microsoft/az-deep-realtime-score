@@ -1,68 +1,25 @@
-# Deploy Deep Learning CNN on IoT Edge with GPUs - Keras
+# Deploy Deep Learning CNN on IoT Edge - Keras
 
-To get started with the tutorial, please proceed with following steps **in sequential order**.
+With the completion of the previous task, we introduce how to deploy an ML module through [Azure IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/how-iot-edge-works). 
 
- * [Prerequisites](#prerequisites)
- * [Setup](#setup)
- * [Steps](#steps)
- * [Cleaning up](#cleanup)
+Azure IoT Edge is an Internet of Things (IoT) service that builds on top of Azure IoT Hub. It is a hybrid solution combining the benefits of the two scenarios: *IoT in the Cloud* and *IoT on the Edge*. This service is meant for customers who want to analyze data on devices, a.k.a. "at the edge", instead of in the cloud. By moving parts of your workload to the edge, your devices can spend less time sending messages to the cloud and react more quickly to changes in status. On the other hand, Azure IoT Hub provides centralized way to manage Azure IoT Edge devices, and make it easy to train ML models in the Cloud and deploy the trained models on the Edge devices.  
+
+In this example, we deploy a trained Keras (tensorflow) CNN model to the edge device. When the image data is generated from a process pipeline and fed into the edge device, the deployed model can make predictions right on the edge device without accessing to the cloud. Following diagram shows the major components of an Azure IoT edge device. Source code and full documentation are linked below.
+
+<p align="center">
+<img src="azureiotedgeruntime.png" alt="logo" width="90%"/>
+</p>
+
+We perform following steps for the deployment.
+
+- Step 1: Build the trained ML model into docker image. This image will be used to create a docker container running on the edge device. 
+- Step 2: Provision and Configure IoT Edge Device
+- Step 3: Deploy ML Module on IoT Edge Device
+- Step 4: Test ML Module
 
 <a id='prerequisites'></a>
 ## Prerequisites
-1. Linux(Ubuntu) with GPU enabled.
-2. [Anaconda Python](https://www.anaconda.com/download)
-3. [Docker](https://docs.docker.com/v17.12/install/linux/docker-ee/ubuntu) installed.
-4. [Azure account](https://azure.microsoft.com).
-
-The tutorial was developed on an [Azure Ubuntu
-DSVM](https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/dsvm-ubuntu-intro),
-which addresses the first three prerequisites.
-
-<a id='setup'></a>
-## Setup
-To set up your environment to run these notebooks, please follow these steps.  They setup the notebooks to use Docker and Azure seamlessly.
-1. Create a _Linux_ DSVM (NC6 or above to use GPU).
-2. Clone, fork, or download the zip file for this repository:
-   ```
-   git clone https://github.com/Microsoft/AKSDeploymentTutorialAML.git
-   ```
-3. Add your user to the docker group (after executing this command, exit and start a new bash shell): 
-   ```
-   sudo usermod -aG docker $USER
-   ```
-   To verify whether you have correct configuration, try executing `docker ps` command. You should not get `permission denied` errors.
-
-4. Navigate to _./AKSDeploymentTutorial\_AML/Keras\_Tensorflow_ directory
-
-5. Create the Python virtual environment using the environment.yml:
-   ```
-   conda env create -f environment.yml
-   ```
-6. Activate the virtual environment:
-   ```
-   source activate aks_deployment_aml
-   ```
-7. Login to Azure:
-   ```
-   az login
-   ```
-8. If you have more than one Azure subscription, select it:
-   ```
-   az account set --subscription <Your Azure Subscription>
-   ```
-9. Start the Jupyter notebook server in the virtual environment:
-   ```
-   jupyter notebook
-   ```
-10. Select correct kernel: set the kernel to be `Python [conda env: aks_deployment_aml]`(or `Python 3` if that option does not show).
-
-<a id='steps'></a>
-## Steps
-After following the setup instructions above, run the Jupyter notebooks in order starting with the first notebook [00_AMLSetup.ipynb](./00_AMLSetup.ipynb).
-
-<a id='cleanup'></a>
-## Cleaning up
-To remove the conda environment created see [here](https://conda.io/projects/continuumio-conda/en/latest/commands/remove.html). The [last Jupyter notebook](./07_TearDown.ipynb)  also gives details on deleting Azure resources associated with this repository.
+Please follow instructions described in the repo README page. 
 
 # Contributing
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
