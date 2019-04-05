@@ -43,3 +43,9 @@ if __name__ == "__main__":
     check_module("{{cookiecutter.project_name}}")
     check_sub_id("{{cookiecutter.subscription_id}}")
     check_image_name("{{cookiecutter.image_name}}")
+    print("All checks passed")
+    if "{{ cookiecutter.deployment_type }}" == "aks":
+        print("Creating AKS project...")
+
+    if "{{ cookiecutter.deployment_type }}" == "iotedge":
+        print("Creating IOT Edge project...")
