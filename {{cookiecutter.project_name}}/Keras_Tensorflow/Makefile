@@ -21,7 +21,7 @@ help:
 
 
 test: setup test-notebook1 test-notebook2 test-notebook3 test-notebook4 test-notebook5 test-notebook6 test-notebook7 \
-	test-notebook8
+	test-notebook-iot test-notebook9
 	@echo All Notebooks Passed
 
 setup:
@@ -101,8 +101,8 @@ test-notebook7:
 
 test-notebook-iot:
 	source activate deployment_aml
-	@echo Testing 04_TearDown.ipynb
-	papermill iot/04_TearDown.ipynb test.ipynb \
+	@echo Testing 04_DeployOnIOTedge.ipynb
+	papermill iotedge/04_DeployOnIOTedge.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
 		-k python3
@@ -160,4 +160,4 @@ remove-py:
 	rm -r py_scripts
 
 .PHONY: help test setup clean remove-notebook test-notebook1 test-notebook2 test-notebook3 test-notebook4 \
-		test-notebook5 test-notebook6 test-notebook7 test-notebook8
+		test-notebook5 test-notebook6 test-notebook7 test-notebook-iot test-notebook9
