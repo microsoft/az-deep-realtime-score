@@ -116,13 +116,13 @@ test-notebook9:
 		-k python3
 
 test-cookiecutter-aks:
-	cookiecutter --no-input https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout yzhang_cc \
+	cookiecutter --no-input https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout mat_yzhang_cc \
 							subscription_id=${SUBSCRIPTION_ID} \
 							workspace_region=${WORKSPACE_REGION} \
 							deployment_type="aks"
 
 test-cookiecutter-iot:
-	cookiecutter --no-input https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout yzhang_cc \
+	cookiecutter --no-input https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout mat_yzhang_cc \
 							subscription_id=${SUBSCRIPTION_ID} \
 							workspace_region=${WORKSPACE_REGION} \
 							deployment_type="iot"
