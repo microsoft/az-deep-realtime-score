@@ -12,6 +12,6 @@
   "deployment_type": [
       "aks",
       "iotedge"
-  ],
+  ]
 }
 
