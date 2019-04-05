@@ -11,9 +11,9 @@ Usage:
 	make clean					delete env and remove files
 endef
 export PROJECT_HELP_MSG
+env_location=.dev_env
 
-
-include .dev_env
+include ${env_location}
 
 
 help:
