@@ -69,13 +69,16 @@ To set up your environment to run these notebooks, please follow these steps.  T
 1. Create a _Linux_ Ubuntu DSVM (NC6 or above to use GPU).
 
 2. Install [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/installation.html), a tool creates projects from project templates.
+```bash
+pip install cookiecutter
+```
 
-3. Clone and choose a specific framework and deployment option for this repository. You will obtain a repository tailored to your choice of framwork and deployment compute target.
-   ```
+3. Clone and choose a specific framework and deployment option for this repository. You will obtain a repository tailored to your choice of framework and deployment compute target.
+   ```bash
    cookiecutter https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout yzhang_cc
    ```
 4. Add your user to the docker group (after executing this command, exit and start a new bash shell): 
-   ```
+   ```bash
    sudo usermod -aG docker $USER
    ```
    To verify whether you have correct configuration, try executing `docker ps` command. You should not get `permission denied` errors.
@@ -83,23 +86,23 @@ To set up your environment to run these notebooks, please follow these steps.  T
 5. Navigate to the framework directory (either Keras_Tensorflow or Pytorch based on your selection)
 
 6. Create the Python virtual environment using the environment.yml:
-   ```
+   ```bash
    conda env create -f environment.yml
    ```
 7. Activate the virtual environment:
-   ```
+   ```bash
    source activate deployment_aml
    ```
 8. Login to Azure:
-   ```
+   ```bash
    az login
    ```
 9. If you have more than one Azure subscription, select it:
-   ```
+   ```bash
    az account set --subscription <Your Azure Subscription>
    ```
 10. Start the Jupyter notebook server in the virtual environment:
-   ```
+   ``` bash
    jupyter notebook
    ```
 11. Select correct kernel: set the kernel to be `Python [conda env: deployment_aml]`(or `Python 3` if that option does not show).
