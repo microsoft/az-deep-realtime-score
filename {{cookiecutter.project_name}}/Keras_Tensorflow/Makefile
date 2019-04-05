@@ -125,7 +125,7 @@ test-cookiecutter-iot:
 	cookiecutter --no-input https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout mat_yzhang_cc \
 							subscription_id=${SUBSCRIPTION_ID} \
 							workspace_region=${WORKSPACE_REGION} \
-							deployment_type="iot"
+							deployment_type="iotedge"
 
 remove-notebook:
 	rm -f test.ipynb
