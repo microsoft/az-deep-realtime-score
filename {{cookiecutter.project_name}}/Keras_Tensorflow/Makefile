@@ -104,7 +104,7 @@ test-notebook-iot1:
 	@echo Testing 04_DeployOnIOTedge.ipynb
 	export PYTHONPATH=$PWD:$PYTHONPATH
 	cd iotedge
-	papermill 04_DeployOnIOTedge.ipynb test.ipynb \
+	PYTHONPATH=$PWD:$PYTHONPATH papermill 04_DeployOnIOTedge.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
 		-k python3 \
