@@ -106,7 +106,10 @@ test-notebook-iot1:
 	papermill iotedge/04_DeployOnIOTedge.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
-		-k python3
+		-k python3 \
+		-p iot_hub_name fstlstnameiothub \
+		-p device_id mygpudevice \
+		-p module_name mygpumodule
 
 test-notebook9:
 	source activate deployment_aml
