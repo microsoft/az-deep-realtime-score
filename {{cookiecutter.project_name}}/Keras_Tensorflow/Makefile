@@ -12,7 +12,7 @@ Usage:
 endef
 export PROJECT_HELP_MSG
 env_location=.dev_env
-
+PWD:=$(shell pwd)
 include ${env_location}
 
 
@@ -99,13 +99,18 @@ test-notebook7:
 		--no-progress-bar \
 		-k python3
 
-test-notebook-iot:
+test-notebook-iot1:
 	source activate deployment_aml
 	@echo Testing 04_DeployOnIOTedge.ipynb
-	papermill iotedge/04_DeployOnIOTedge.ipynb test.ipynb \
+	export PYTHONPATH=${PWD}:${PYTHONPATH}
+	cd iotedge
+	papermill 04_DeployOnIOTedge.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
-		-k python3
+		-k python3 \
+		-p iot_hub_name fstlstnameiothub \
+		-p device_id mygpudevice \
+		-p module_name mygpumodule
 
 test-notebook9:
 	source activate deployment_aml
@@ -114,6 +119,16 @@ test-notebook9:
 		--log-output \
 		--no-progress-bar \
 		-k python3
+
+test-notebook-iot2:
+	source activate deployment_aml
+	@echo Testing 05_TearDown.ipynb
+	export PYTHONPATH=${PWD}:${PYTHONPATH}
+	papermill iotedge/05_TearDown.ipynb test.ipynb \
+		--log-output \
+		--no-progress-bar \
+		-k python3
+
 
 test-cookiecutter-aks:
 	cookiecutter --no-input https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout mat_yzhang_cc \
