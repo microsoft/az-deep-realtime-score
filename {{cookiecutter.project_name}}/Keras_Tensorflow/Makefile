@@ -103,6 +103,8 @@ test-notebook-iot1:
 	source activate deployment_aml
 	@echo Testing 04_DeployOnIOTedge.ipynb
 	export PYTHONPATH=$PWD:$PYTHONPATH
+	echo $PYTHONPATH
+	echo $PWD
 	cd iotedge
 	PYTHONPATH=$PWD:$PYTHONPATH papermill 04_DeployOnIOTedge.ipynb test.ipynb \
 		--log-output \
