@@ -27,7 +27,7 @@ Please follow these steps to set up your environment and run notebooks.  They se
    ```
    To verify whether you have correct configuration, try executing `docker ps` command. You should not get `permission denied` errors.
 
-2. Navigate to {{project_name}} directory
+2. Navigate to *{{cookiecutter.project_name}}* directory
 
 3. Create the Python virtual environment using the environment.yml:
    ```
@@ -35,7 +35,7 @@ Please follow these steps to set up your environment and run notebooks.  They se
    ```
 4. Activate the virtual environment:
    ```
-   source activate aks_deployment_aml
+   source activate deployment_aml
    ```
 5. Login to Azure:
    ```

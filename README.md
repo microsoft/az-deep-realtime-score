@@ -76,7 +76,7 @@ pip install cookiecutter
    ```bash
    cookiecutter https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout yzhang_cc
    ```
-4. By far you should get a repo with name {{project_name}} in your local host. Go find a README.md file in this repo and proceed with instructions specified in it. 
+4. By far you should get a repo with name *project_name* you have specified in your local host. Go find a README.md file in this repo and proceed with instructions specified in it. 
 
 
 
