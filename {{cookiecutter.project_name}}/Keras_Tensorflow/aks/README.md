@@ -27,7 +27,7 @@ Please follow these steps to set up your environment and run notebooks.  They se
    ```
    To verify whether you have correct configuration, try executing `docker ps` command. You should not get `permission denied` errors.
 
-2. Navigate to *{{cookiecutter.project_name}}* directory
+2. Navigate to the directory which is the framework you have chosen (e.g. Keras_Tensorflow).
 
 3. Create the Python virtual environment using the environment.yml:
    ```
