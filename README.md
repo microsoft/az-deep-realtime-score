@@ -49,12 +49,11 @@ To get started with the tutorial, please proceed with following steps **in seque
 
  * [Prerequisites](#prerequisites)
  * [Setup](#setup)
- * [Steps](#steps)
- * [Cleaning up](#cleanup)
+
 
 <a id='prerequisites'></a>
 ## Prerequisites
-1. Linux (Ubuntu) with GPU enabled.
+1. Linux (x64) with GPU enabled.
 2. [Anaconda Python](https://www.anaconda.com/download)
 3. [Docker](https://docs.docker.com/v17.12/install/linux/docker-ee/ubuntu) installed.
 4. [Azure account](https://azure.microsoft.com).
@@ -65,7 +64,7 @@ which addresses the first three prerequisites.
 
 <a id='setup'></a>
 ## Setup
-To set up your environment to run these notebooks, please follow these steps.  They setup the notebooks to use Docker and Azure seamlessly.
+To set up your environment to run these notebooks, please follow these steps.  
 1. Create a _Linux_ Ubuntu DSVM (NC6 or above to use GPU).
 
 2. Install [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/installation.html), a tool creates projects from project templates.
@@ -77,45 +76,7 @@ pip install cookiecutter
    ```bash
    cookiecutter https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout yzhang_cc
    ```
-4. Add your user to the docker group (after executing this command, exit and start a new bash shell): 
-   ```bash
-   sudo usermod -aG docker $USER
-   ```
-   To verify whether you have correct configuration, try executing `docker ps` command. You should not get `permission denied` errors.
-
-5. Navigate to the framework directory (either Keras_Tensorflow or Pytorch based on your selection)
-
-6. Create the Python virtual environment using the environment.yml:
-   ```bash
-   conda env create -f environment.yml
-   ```
-7. Activate the virtual environment:
-   ```bash
-   source activate deployment_aml
-   ```
-8. Login to Azure:
-   ```bash
-   az login
-   ```
-9. If you have more than one Azure subscription, select it:
-   ```bash
-   az account set --subscription <Your Azure Subscription>
-   ```
-10. Start the Jupyter notebook server in the virtual environment:
-   ``` bash
-   jupyter notebook
-   ```
-11. Select correct kernel: set the kernel to be `Python [conda env: deployment_aml]`(or `Python 3` if that option does not show).
-
-<a id='steps'></a>
-
-## Steps
-After following the setup instructions above, run the Jupyter notebooks in order starting with the first notebook `00_AMLSetup.ipynb`.
-
-<a id='cleanup'></a>
-## Cleaning up
-To remove the conda environment created see [here](https://conda.io/projects/continuumio-conda/en/latest/commands/remove.html). The last Jupyter notebook in each framework directory  also gives details on deleting Azure resources associated with this repository.
-
+4. By far you should get a repo with name {{project_name}} in your local host. Go find a README.md file in this repo and proceed with instructions specified in it. 
 
 
 
