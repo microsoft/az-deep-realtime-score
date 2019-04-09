@@ -21,7 +21,7 @@ help:
 
 
 test: setup test-notebook1 test-notebook2 test-notebook3 test-notebook4 test-notebook5 test-notebook6 test-notebook7 \
-	test-notebook-iot test-notebook9
+	test-notebook-iot1 test-notebook8 test-notebook-iot2
 	@echo All Notebooks Passed
 
 setup:
@@ -112,7 +112,7 @@ test-notebook-iot1:
 		-p device_id mygpudevice \
 		-p module_name mygpumodule
 
-test-notebook9:
+test-notebook8:
 	source activate deployment_aml
 	@echo Testing 07_TearDown.ipynb
 	papermill aks/07_TearDown.ipynb test.ipynb \
