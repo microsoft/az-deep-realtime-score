@@ -103,8 +103,6 @@ test-notebook-iot1:
 	source activate deployment_aml
 	@echo Testing 04_DeployOnIOTedge.ipynb
 	export PYTHONPATH=${PWD}:${PYTHONPATH}
-	echo ${PYTHONPATH}
-	echo ${PWD}
 	cd iotedge
 	papermill 04_DeployOnIOTedge.ipynb test.ipynb \
 		--log-output \
@@ -125,7 +123,7 @@ test-notebook9:
 test-notebook-iot2:
 	source activate deployment_aml
 	@echo Testing 05_TearDown.ipynb
-	export PYTHONPATH=$PWD:$PYTHONPATH
+	export PYTHONPATH=${PWD}:${PYTHONPATH}
 	papermill iotedge/05_TearDown.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
