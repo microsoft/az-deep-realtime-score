@@ -76,7 +76,9 @@ pip install cookiecutter
    ```bash
    cookiecutter https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout yzhang_cc
    ```
-You will be asked to choose or enter information such as *framework*, *project name*, *subsciption id*, *resource group*, etc. in an interactive way. If a dafult value is provided, you can press *Enter* to accept the default value and continue or enter value of your choice. You must provide a value for "subscription_id", otherwise a error "ERROR: The subscription id is missing, please enter a valid subscription id" will be generated after all the questions are asked. You have to perform Step 3 all over again. The full list of questions can be found in [cookiecutter.json](./cookiecutter.json) file. 
+You will be asked to choose or enter information such as *framework*, *project name*, *subsciption id*, *resource group*, etc. in an interactive way. If a dafult value is provided, you can press *Enter* to accept the default value and continue or enter value of your choice. For example, if you want to learn how to deploy deep learing model on AKS Cluster using Keras, you should have values "keras" as the value for variable *framework* and "aks" for variable *deployment_type*. Instead, if you want to learn deploying deep learning model on IoT Edge, you should select "iotedge" for variable *deployment_type*. 
+
+You must provide a value for "subscription_id", otherwise a error "ERROR: The subscription id is missing, please enter a valid subscription id" will be generated after all the questions are asked. You have to perform Step 3 all over again. The full list of questions can be found in [cookiecutter.json](./cookiecutter.json) file. 
 
 Please make sure all entered information are correct, as these information are used to customize the content of your repo. 
 
