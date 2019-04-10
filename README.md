@@ -22,7 +22,7 @@ In this repository there are a number of tutorials in Jupyter notebooks that hav
      * Testing the throughput of our model
      * Cleaning up resources
  * IOT Edge option
-     * Creating IoT hub and IoT Edge device identity, configuring the phisical IOT Edge device, and deploying our application to it
+     * Creating IoT hub and IoT Edge device identity, configuring the physical IOT Edge device, and deploying our application to it
      * Cleaning up resources
  
 ## Design
@@ -43,7 +43,6 @@ The application we will develop is a simple image classification service, where 
 
 
 # Getting Started
-This repository is arranged as submodules and threfore you can either pull all the tutorials or simply the ones you want.
 
 To get started with the tutorial, please proceed with following steps **in sequential order**.
 
@@ -74,16 +73,16 @@ pip install cookiecutter
 
 3. Clone and choose a specific framework and deployment option for this repository. You will obtain a repository tailored to your choice of framework and deployment compute target.
    ```bash
-   cookiecutter https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout yzhang_cc
+   cookiecutter https://github.com/Microsoft/AKSDeploymentTutorialAML.git 
    ```
-You will be asked to choose or enter information such as *framework*, *project name*, *subsciption id*, *resource group*, etc. in an interactive way. If a dafult value is provided, you can press *Enter* to accept the default value and continue or enter value of your choice. For example, if you want to learn how to deploy deep learing model on AKS Cluster using Keras, you should have values "keras" as the value for variable *framework* and "aks" for variable *deployment_type*. Instead, if you want to learn deploying deep learning model on IoT Edge, you should select "iotedge" for variable *deployment_type*. 
+You will be asked to choose or enter information such as *framework*, *project name*, *subsciption id*, *resource group*, etc. in an interactive way. If a dafault value is provided, you can press *Enter* to accept the default value and continue or enter value of your choice. For example, if you want to learn how to deploy deep learning model on AKS Cluster using Keras, you should have values "keras" as the value for variable *framework* and "aks" for variable *deployment_type*. Instead, if you want to learn deploying deep learning model on IoT Edge, you should select "iotedge" for variable *deployment_type*. 
 
-You must provide a value for "subscription_id", otherwise a error "ERROR: The subscription id is missing, please enter a valid subscription id" will be generated after all the questions are asked. You have to perform Step 3 all over again. The full list of questions can be found in [cookiecutter.json](./cookiecutter.json) file. 
+You must provide a value for "subscription_id", otherwise the project will fail with the error "ERROR: The subscription id is missing, please enter a valid subscription id" after all the questions are asked. The full list of questions can be found in [cookiecutter.json](./cookiecutter.json) file. 
 
 Please make sure all entered information are correct, as these information are used to customize the content of your repo. 
 
 
-4. Proceed with README files such as [aks-keras](./{{cookiecutter.project_name}}/Keras_Tensorflow/aks/README.md) or [iotedge-keras](./{{cookiecutter.project_name}}/Keras_Tensorflow/iotedge/README.md). In your local host, by far you should get a repo with name *project_name* you have specified. Go find a README.md file in this repo and proceed with instructions specified in it. 
+4. With the generation of the project custom readmes will be created based on  [aks-keras](./{{cookiecutter.project_name}}/Keras_Tensorflow/aks/README.md) or [iotedge-keras](./{{cookiecutter.project_name}}/Keras_Tensorflow/iotedge/README.md). Go find a README.md file in your project directory and proceed with instructions specified in it. 
 
 
 
