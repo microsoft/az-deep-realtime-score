@@ -23,7 +23,8 @@ jobs:
 
   - bash: |
       echo $(pwd)
-      conda env create -f {{cookiecutter.project_template}}/Keras_Tensorflow/environment.yml
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow
+      conda env create -f environment.yml
       source activate deployment_aml
       conda env list
       echo Login Azure Account
