@@ -23,6 +23,7 @@ jobs:
 
   - bash: |
       echo $(pwd)
+      echo $(ls)
       cd {{cookiecutter.project_template}}/Keras_Tensorflow
       conda env create -f environment.yml
       source activate deployment_aml
