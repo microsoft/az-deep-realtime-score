@@ -87,18 +87,18 @@ jobs:
       papermill 06_SpeedTestWebApp.ipynb 06_SpeedTestWebApp_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '06_SpeedTestWebApp.ipynb'
 
-  - bash: |
-      source activate deployment_aml
-      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow/iotedge
-      papermill 04_DeployOnIOTedge.ipynb 04_DeployOnIOTedge_output.ipynb \
-      	--log-output \
-      	--no-progress-bar \
-      	-k python3 \
-      	-p iot_hub_name fstlstnameiothub \
-      	-p device_id mygpudevice \
-      	-p module_name mygpumodule
-    displayName: '04_DeployOnIOTedge.ipynb'
+#  - bash: |
+#      source activate deployment_aml
+#      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
+#      cd {{cookiecutter.project_name}}/Keras_Tensorflow/iotedge
+#      papermill 04_DeployOnIOTedge.ipynb 04_DeployOnIOTedge_output.ipynb \
+#      	--log-output \
+#      	--no-progress-bar \
+#      	-k python3 \
+#      	-p iot_hub_name fstlstnameiothub \
+#      	-p device_id mygpudevice \
+#      	-p module_name mygpumodule
+#    displayName: '04_DeployOnIOTedge.ipynb'
 
   - bash: |
       source activate deployment_aml
@@ -107,15 +107,15 @@ jobs:
       papermill 07_TearDown.ipynb 07_TearDown_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '07_TearDown.ipynb'
 
-  - bash: |
-      source activate deployment_aml
-      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow/iotedge
-      papermill 05_TearDown.ipynb 05_TearDown_output.ipynb \
-      	--log-output \
-      	--no-progress-bar \
-      	-k python3
-    displayName: '05_TearDown.ipynb'
+#  - bash: |
+#      source activate deployment_aml
+#      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
+#      cd {{cookiecutter.project_name}}/Keras_Tensorflow/iotedge
+#      papermill 05_TearDown.ipynb 05_TearDown_output.ipynb \
+#      	--log-output \
+#      	--no-progress-bar \
+#      	-k python3
+#    displayName: '05_TearDown.ipynb'
 
   - bash: |
       echo Remove All Docker Containers
