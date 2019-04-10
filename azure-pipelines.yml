@@ -68,18 +68,21 @@ jobs:
 
   - bash: |
       source activate deployment_aml
+      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
       papermill 04_DeployOnAKS.ipynb 04_DeployOnAKS_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '04_DeployOnAKS.ipynb'
 
   - bash: |
       source activate deployment_aml
+      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
       papermill 05_TestWebApp.ipynb 05_TestWebApp_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '05_TestWebApp.ipynb'
 
   - bash: |
       source activate deployment_aml
+      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
       papermill 06_SpeedTestWebApp.ipynb 06_SpeedTestWebApp_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '06_SpeedTestWebApp.ipynb'
@@ -99,6 +102,7 @@ jobs:
 
   - bash: |
       source activate deployment_aml
+      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
       papermill 07_TearDown.ipynb 07_TearDown_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '07_TearDown.ipynb'
