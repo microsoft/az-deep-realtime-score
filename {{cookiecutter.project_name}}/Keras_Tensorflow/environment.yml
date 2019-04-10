@@ -1,4 +1,4 @@
-name: aks_deployment_aml
+name: deployment_aml
 dependencies:
   # The python interpreter version.
   # Currently Azure ML only supports 3.5.2 and later.

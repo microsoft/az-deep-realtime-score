@@ -11,9 +11,9 @@ Usage:
 	make clean					delete env and remove files
 endef
 export PROJECT_HELP_MSG
-
-
-include .dev_env
+env_location=.dev_env
+PWD:=$(shell pwd)
+include ${env_location}
 
 
 help:
@@ -21,7 +21,7 @@ help:
 
 
 test: setup test-notebook1 test-notebook2 test-notebook3 test-notebook4 test-notebook5 test-notebook6 test-notebook7 \
-	test-notebook8
+	test-notebook-iot1 test-notebook8 test-notebook-iot2
 	@echo All Notebooks Passed
 
 setup:
@@ -36,7 +36,7 @@ endif
 
 
 test-notebook1:
-	source activate aks_deployment_aml
+	source activate deployment_aml
 	@echo Testing 00_AMLSetup.ipynb
 	papermill 00_AMLSetup.ipynb test.ipynb \
 		--log-output \
@@ -52,7 +52,7 @@ test-notebook1:
 		-p aks_service_name ${AKS_SERVICE_NAME}
 
 test-notebook2:
-	source activate aks_deployment_aml
+	source activate deployment_aml
 	@echo Testing 01_DevelopModel.ipynb
 	papermill 01_DevelopModel.ipynb test.ipynb \
 		--log-output \
@@ -60,7 +60,7 @@ test-notebook2:
 		-k python3
 
 test-notebook3:
-	source activate aks_deployment_aml
+	source activate deployment_aml
 	@echo Testing 02_DevelopModelDriver.ipynb
 	papermill 02_DevelopModelDriver.ipynb test.ipynb \
 		--log-output \
@@ -68,7 +68,7 @@ test-notebook3:
 		-k python3
 
 test-notebook4:
-	source activate aks_deployment_aml
+	source activate deployment_aml
 	@echo Testing 03_BuildImage.ipynb
 	papermill 03_BuildImage.ipynb test.ipynb \
 		--log-output \
@@ -76,42 +76,77 @@ test-notebook4:
 		-k python3
 
 test-notebook5:
-	source activate aks_deployment_aml
+	source activate deployment_aml
 	@echo Testing 04_DeployOnAKS.ipynb
-	papermill 04_DeployOnAKS.ipynb test.ipynb \
+	papermill aks/04_DeployOnAKS.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
 		-k python3
 
 test-notebook6:
-	source activate aks_deployment_aml
+	source activate deployment_aml
 	@echo Testing 05_TestWebApp.ipynb
-	papermill 05_TestWebApp.ipynb test.ipynb \
+	papermill aks/05_TestWebApp.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
 		-k python3
 
 test-notebook7:
-	source activate aks_deployment_aml
+	source activate deployment_aml
 	@echo Testing 06_SpeedTestWebApp.ipynb
-	papermill 06_SpeedTestWebApp.ipynb test.ipynb \
+	papermill aks/06_SpeedTestWebApp.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
 		-k python3
 
+test-notebook-iot1:
+	source activate deployment_aml
+	@echo Testing 04_DeployOnIOTedge.ipynb
+	export PYTHONPATH=${PWD}:${PYTHONPATH}
+	cd iotedge
+	papermill 04_DeployOnIOTedge.ipynb test.ipynb \
+		--log-output \
+		--no-progress-bar \
+		-k python3 \
+		-p iot_hub_name fstlstnameiothub \
+		-p device_id mygpudevice \
+		-p module_name mygpumodule
+
 test-notebook8:
-	source activate aks_deployment_aml
+	source activate deployment_aml
 	@echo Testing 07_TearDown.ipynb
-	papermill 07_TearDown.ipynb test.ipynb \
+	papermill aks/07_TearDown.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
 		-k python3
+
+test-notebook-iot2:
+	source activate deployment_aml
+	@echo Testing 05_TearDown.ipynb
+	export PYTHONPATH=${PWD}:${PYTHONPATH}
+	papermill iotedge/05_TearDown.ipynb test.ipynb \
+		--log-output \
+		--no-progress-bar \
+		-k python3
+
+
+test-cookiecutter-aks:
+	cookiecutter --no-input https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout mat_yzhang_cc \
+							subscription_id="${SUBSCRIPTION_ID}" \
+							workspace_region=${WORKSPACE_REGION} \
+							deployment_type="aks"
+
+test-cookiecutter-iot:
+	cookiecutter --no-input https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout mat_yzhang_cc \
+							subscription_id=${SUBSCRIPTION_ID} \
+							workspace_region=${WORKSPACE_REGION} \
+							deployment_type="iotedge"
 
 remove-notebook:
 	rm -f test.ipynb
 
 clean: remove-notebook
-	conda remove --name aks_deployment_aml -y --all
+	conda remove --name deployment_aml -y --all
 	rm -rf aml_config
 	rm -rf __pycache__
 	rm -rf .ipynb_checkpoints
@@ -120,11 +155,11 @@ clean: remove-notebook
 	rm driver.py img_env.yml model_resnet_weights.h5
 
 notebook:
-	source activate aks_deployment_aml
+	source activate deployment_aml
 	jupyter notebook --port 9999 --ip 0.0.0.0 --no-browser
 
 install-jupytext:
-	source activate aks_deployment_aml
+	source activate deployment_aml
 	conda install -c conda-forge jupytext
 
 convert-to-py:
@@ -140,4 +175,4 @@ remove-py:
 	rm -r py_scripts
 
 .PHONY: help test setup clean remove-notebook test-notebook1 test-notebook2 test-notebook3 test-notebook4 \
-		test-notebook5 test-notebook6 test-notebook7 test-notebook8
+		test-notebook5 test-notebook6 test-notebook7 test-notebook-iot test-notebook9

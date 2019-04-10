@@ -22,69 +22,102 @@ jobs:
     displayName: 'Builds source for AKSDeploymentTutorialAML/Keras_Tensorflow'
 
   - bash: |
-      cd Keras_Tensorflow
+      echo $(pwd)
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow
       conda env create -f environment.yml
-      source activate aks_deployment_aml
-      conda env list  
-      echo Docker Setup
-      #sudo usermod -aG docker $USER
+      source activate deployment_aml
+      conda env list
       echo Login Azure Account
       az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
       az account set --subscription $(subscriptionid)
     displayName: 'Build Configuration'
 
   - bash: |
-      source activate aks_deployment_aml
-      cd Keras_Tensorflow
-      papermill 00_AMLSetup.ipynb 00_AMLSetup_output.ipynb --log-output --no-progress-bar -k python3 -p resource_group $(azureresourcegroup) -p workspace_name $(workspacename) -p workspace_region  $(azureregion) -p subscription_id $(subscriptionid) -p image_name 'modelimg' -p aks_name 'aksdeployamlaks' -p aks_service_name 'aksamlsvc' -p aks_location $(azureregion)
+      source activate deployment_aml
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow
+      papermill 00_AMLSetup.ipynb 00_AMLSetup_output.ipynb \
+                --log-output \
+                --no-progress-bar \
+                -k python3 \
+                -p resource_group $(azureresourcegroup) \
+                -p workspace_name $(workspacename) \
+                -p workspace_region  $(azureregion) \
+                -p subscription_id $(subscriptionid) \
+                -p image_name 'modelimg' \
+                -p aks_name 'aksdeployamlaks' \
+                -p aks_service_name 'aksamlsvc' \
+                -p aks_location $(azureregion) \
     displayName : '00_AMLSetup.ipynb'
 
   - bash: |
-      source activate aks_deployment_aml
-      cd Keras_Tensorflow
+      source activate deployment_aml
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow
       papermill 01_DevelopModel.ipynb 01_DevelopModel_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '01_DevelopModel.ipynb'
 
   - bash: |
-      source activate aks_deployment_aml
-      cd Keras_Tensorflow
+      source activate deployment_aml
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow
       papermill 02_DevelopModelDriver.ipynb 02_DevelopModelDriver_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '02_DevelopModelDriver.ipynb'
 
   - bash: |
-      source activate aks_deployment_aml
-      cd Keras_Tensorflow
+      source activate deployment_aml
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow
       papermill 03_BuildImage.ipynb 03_BuildImage_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '03_BuildImage.ipynb'
 
   - bash: |
-      source activate aks_deployment_aml
-      cd Keras_Tensorflow
+      source activate deployment_aml
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow/aks
       papermill 04_DeployOnAKS.ipynb 04_DeployOnAKS_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '04_DeployOnAKS.ipynb'
 
   - bash: |
-      source activate aks_deployment_aml
-      cd Keras_Tensorflow
+      source activate deployment_aml
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow/aks
       papermill 05_TestWebApp.ipynb 05_TestWebApp_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '05_TestWebApp.ipynb'
 
   - bash: |
-      source activate aks_deployment_aml
-      cd Keras_Tensorflow
+      source activate deployment_aml
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow/aks
       papermill 06_SpeedTestWebApp.ipynb 06_SpeedTestWebApp_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '06_SpeedTestWebApp.ipynb'
 
   - bash: |
-      source activate aks_deployment_aml
-      cd Keras_Tensorflow
+      source activate deployment_aml
+      export PYTHONPATh=$(pwd)/{{cookiecutter.project_template}}/Keras_Tensorflow:${PYTHONPATH}
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow/iotedge
+      papermill 04_DeployOnIOTedge.ipynb 04_DeployOnIOTedge_output.ipynb \
+      	--log-output \
+      	--no-progress-bar \
+      	-k python3 \
+      	-p iot_hub_name fstlstnameiothub \
+      	-p device_id mygpudevice \
+      	-p module_name mygpumodule
+    displayName: '04_DeployOnIOTedge.ipynb'
+
+  - bash: |
+      source activate deployment_aml
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow/aks
       papermill 07_TearDown.ipynb 07_TearDown_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '07_TearDown.ipynb'
 
   - bash: |
+      source activate deployment_aml
+      export PYTHONPATh=$(pwd)/{{cookiecutter.project_template}}/Keras_Tensorflow:${PYTHONPATH}
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow/iotedge
+      papermill 05_TearDown.ipynb 05_TearDown_output.ipynb \
+      	--log-output \
+      	--no-progress-bar \
+      	-k python3
+    displayName: '05_TearDown.ipynb'
+
+  - bash: |
       echo Remove All Docker Containers
-      #docker stop $(docker ps -a -q)
-      #docker rm $(docker ps -a -q)
+      docker stop $(docker ps -a -q)
+      docker rm $(docker ps -a -q)
 
       echo Remove Conda Environment
       conda remove -n aks_deployment_aml --all -q --force -y

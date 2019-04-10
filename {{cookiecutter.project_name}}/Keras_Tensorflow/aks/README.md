@@ -3,13 +3,12 @@
 To get started with the tutorial, please proceed with following steps **in sequential order**.
 
  * [Prerequisites](#prerequisites)
- * [Setup](#setup)
  * [Steps](#steps)
  * [Cleaning up](#cleanup)
 
 <a id='prerequisites'></a>
 ## Prerequisites
-1. Linux(Ubuntu) with GPU enabled.
+1. Linux (x64) with GPU enabled.
 2. [Anaconda Python](https://www.anaconda.com/download)
 3. [Docker](https://docs.docker.com/v17.12/install/linux/docker-ee/ubuntu) installed.
 4. [Azure account](https://azure.microsoft.com).
@@ -18,47 +17,41 @@ The tutorial was developed on an [Azure Ubuntu
 DSVM](https://docs.microsoft.com/en-us/azure/machine-learning/data-science-virtual-machine/dsvm-ubuntu-intro),
 which addresses the first three prerequisites.
 
-<a id='setup'></a>
-## Setup
-To set up your environment to run these notebooks, please follow these steps.  They setup the notebooks to use Docker and Azure seamlessly.
-1. Create a _Linux_ DSVM (NC6 or above to use GPU).
-2. Clone, fork, or download the zip file for this repository:
-   ```
-   git clone https://github.com/Microsoft/AKSDeploymentTutorialAML.git
-   ```
-3. Add your user to the docker group (after executing this command, exit and start a new bash shell): 
+<a id='steps'></a>
+## Steps
+Please follow these steps to set up your environment and run notebooks.  They setup the notebooks to use Docker and Azure seamlessly.
+
+1. Add your user to the docker group (after executing this command, exit and start a new bash shell): 
    ```
    sudo usermod -aG docker $USER
    ```
    To verify whether you have correct configuration, try executing `docker ps` command. You should not get `permission denied` errors.
 
-4. Navigate to _./AKSDeploymentTutorial\_AML/Keras\_Tensorflow_ directory
+2. Navigate to the directory which is the framework you have chosen (e.g. Keras_Tensorflow).
 
-5. Create the Python virtual environment using the environment.yml:
+3. Create the Python virtual environment using the environment.yml:
    ```
    conda env create -f environment.yml
    ```
-6. Activate the virtual environment:
+4. Activate the virtual environment:
    ```
-   source activate aks_deployment_aml
+   source activate deployment_aml
    ```
-7. Login to Azure:
+5. Login to Azure:
    ```
    az login
    ```
-8. If you have more than one Azure subscription, select it:
+6. If you have more than one Azure subscription, select it:
    ```
    az account set --subscription <Your Azure Subscription>
    ```
-9. Start the Jupyter notebook server in the virtual environment:
+7. Start the Jupyter notebook server in the virtual environment:
    ```
    jupyter notebook
    ```
-10. Select correct kernel: set the kernel to be `Python [conda env:aks_deployment_aml]`(or `Python 3` if that option does not show).
+8. Select correct kernel: set the kernel to be `Python [conda env: deployment_aml]`(or `Python 3` if that option does not show).
 
-<a id='steps'></a>
-## Steps
-After following the setup instructions above, run the Jupyter notebooks in order starting with the first notebook [00_AMLSetup.ipynb](./00_AMLSetup.ipynb).
+9. After following the setup instructions above, run the Jupyter notebooks in order starting with the first notebook [00_AMLSetup.ipynb](./00_AMLSetup.ipynb).
 
 <a id='cleanup'></a>
 ## Cleaning up
