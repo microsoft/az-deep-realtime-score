@@ -22,6 +22,7 @@ jobs:
     displayName: 'Builds source for AKSDeploymentTutorialAML/Keras_Tensorflow'
 
   - bash: |
+      echo $(pwd)
       conda env create -f {{cookiecutter.project_template}}/Keras_Tensorflow/environment.yml
       source activate deployment_aml
       conda env list
