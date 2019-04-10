@@ -23,7 +23,7 @@ jobs:
 
   - bash: |
       cd Keras_Tensorflow
-      conda env create -f environment.yml
+      conda env create -f {{cookiecutter.project_template}}/environment.yml
       source activate deployment_aml
       conda env list
       echo Login Azure Account
@@ -33,7 +33,7 @@ jobs:
 
   - bash: |
       source activate deployment_aml
-      cd Keras_Tensorflow
+      cd {{cookiecutter.project_template}}/Keras_Tensorflow
       papermill 00_AMLSetup.ipynb 00_AMLSetup_output.ipynb \
                 --log-output \
                 --no-progress-bar \
