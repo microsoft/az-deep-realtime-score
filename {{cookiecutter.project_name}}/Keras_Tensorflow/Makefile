@@ -47,9 +47,6 @@ test-notebook1:
 		-p workspace_name ${WORKSPACE_NAME} \
 		-p workspace_region ${WORKSPACE_REGION} \
 		-p image_name ${IMAGE_NAME} \
-		-p aks_name ${AKS_NAME} \
-		-p aks_location ${WORKSPACE_REGION} \
-		-p aks_service_name ${AKS_SERVICE_NAME}
 
 test-notebook2:
 	source activate deployment_aml
@@ -89,7 +86,10 @@ test-notebook6:
 	papermill aks/05_TestWebApp.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
-		-k python3
+		-k python3 \
+		-p aks_name ${AKS_NAME} \
+		-p aks_location ${WORKSPACE_REGION} \
+		-p aks_service_name ${AKS_SERVICE_NAME}
 
 test-notebook7:
 	source activate deployment_aml
