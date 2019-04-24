@@ -78,7 +78,10 @@ test-notebook5:
 	papermill aks/04_DeployOnAKS.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
-		-k python3
+		-k python3 \
+		-p aks_name ${AKS_NAME} \
+		-p aks_location ${WORKSPACE_REGION} \
+		-p aks_service_name ${AKS_SERVICE_NAME}
 
 test-notebook6:
 	source activate deployment_aml
