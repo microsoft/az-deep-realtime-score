@@ -50,43 +50,49 @@ jobs:
 
   - bash: |
       source activate deployment_aml
+      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow
       papermill 01_DevelopModel.ipynb 01_DevelopModel_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '01_DevelopModel.ipynb'
 
   - bash: |
       source activate deployment_aml
+      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow
       papermill 02_DevelopModelDriver.ipynb 02_DevelopModelDriver_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '02_DevelopModelDriver.ipynb'
 
   - bash: |
       source activate deployment_aml
+      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow
       papermill 03_BuildImage.ipynb 03_BuildImage_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '03_BuildImage.ipynb'
 
   - bash: |
       source activate deployment_aml
+      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
       papermill 04_DeployOnAKS.ipynb 04_DeployOnAKS_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '04_DeployOnAKS.ipynb'
 
   - bash: |
       source activate deployment_aml
+      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
       papermill 05_TestWebApp.ipynb 05_TestWebApp_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '05_TestWebApp.ipynb'
 
   - bash: |
       source activate deployment_aml
+      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
       papermill 06_SpeedTestWebApp.ipynb 06_SpeedTestWebApp_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '06_SpeedTestWebApp.ipynb'
 
   - bash: |
       source activate deployment_aml
-      export PYTHONPATh=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
+      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_template}}/Keras_Tensorflow/iotedge
       papermill 04_DeployOnIOTedge.ipynb 04_DeployOnIOTedge_output.ipynb \
       	--log-output \
