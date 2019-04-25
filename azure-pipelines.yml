@@ -42,10 +42,7 @@ jobs:
                 -p workspace_name $(workspacename) \
                 -p workspace_region  $(azureregion) \
                 -p subscription_id $(subscriptionid) \
-                -p image_name 'modelimg' \
-                -p aks_name 'aksdeployamlaks' \
-                -p aks_service_name 'aksamlsvc' \
-                -p aks_location $(azureregion) \
+                -p image_name 'modelimg'
     displayName : '00_AMLSetup.ipynb'
 
   - bash: |
@@ -73,7 +70,13 @@ jobs:
       source activate deployment_aml
       export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
-      papermill 04_DeployOnAKS.ipynb 04_DeployOnAKS_output.ipynb --log-output --no-progress-bar -k python3
+      papermill 04_DeployOnAKS.ipynb 04_DeployOnAKS_output.ipynb \
+                --log-output \
+                --no-progress-bar \
+                -k python3 \
+                -p aks_name 'aksdeployamlaks' \
+                -p aks_service_name 'aksamlsvc' \
+                -p aks_location $(azureregion)
     displayName : '04_DeployOnAKS.ipynb'
 
   - bash: |
