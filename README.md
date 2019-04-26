@@ -2,7 +2,7 @@
 [![Build Status](https://dev.azure.com/customai/AKSDeploymentTutorialAML/_apis/build/status/Microsoft.AKSDeploymentTutorialAML?branchName=master)](https://dev.azure.com/customai/AKSDeploymentTutorialAML/_build/latest?definitionId=11&branchName=master)
 # Deploy Deep Learning CNN using Azure Machine Learning
 ## Overview
-In this repository there are a number of tutorials in Jupyter notebooks that have step-by-step instructions on how to deploy a pretrained deep learning model on a GPU enabled Kubernetes cluster throught Azure Machine Learning (AML). The tutorials cover how to deploy models from the following deep learning frameworks on specific deployment target:
+In this repository there are a number of tutorials in Jupyter notebooks that have step-by-step instructions on how to deploy a pretrained deep learning model on a GPU enabled Kubernetes cluster throught Azure Machine Learning (AzureML). The tutorials cover how to deploy models from the following deep learning frameworks on specific deployment target:
 
 * Keras (TensorFlow backend)
   - [Azure Kubernetes Service (AKS) Cluster with GPUs](./{{cookiecutter.project_name}}/Keras_Tensorflow/aks)
@@ -12,7 +12,7 @@ In this repository there are a number of tutorials in Jupyter notebooks that hav
 ![alt text](https://happypathspublic.blob.core.windows.net/aksdeploymenttutorialaml/example.png "Example Classification")
  
  For each framework, we go through the following steps:
- * Create an AML Workspace
+ * Create an AzureML Workspace
  * Model development where we load the pretrained model and test it by using it to score images
  * Develop the API that will call our model 
  * Building the Docker Image with our REST API and model and testing the image
@@ -27,12 +27,12 @@ In this repository there are a number of tutorials in Jupyter notebooks that hav
  
 ## Design
 
-The application we will develop is a simple image classification service, where we will submit an image and get back what class the image belongs to. The application flow for the deep learning model is as follows:
-1)	Deep learning model is registered to AML model registry.
-2)	AML creates a docker image including the model and scoring script.
-3)	AML deploys the scoring image on the chosen deployment compute target (AKS or IoT Edge) as a web service.
+As described on the associated [Azure Reference Architecture page](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/ai/realtime-scoring-python), the application we will develop is a simple image classification service, where we will submit an image and get back what class the image belongs to. The application flow for the deep learning model is as follows:
+1)	Deep learning model is registered to AzureML model registry.
+2)	AzureML creates a docker image including the model and scoring script.
+3)	AzureML deploys the scoring image on the chosen deployment compute target (AKS or IoT Edge) as a web service.
 4)	The client sends a HTTP POST request with the encoded image data.
-5)	The web service created by AML preprocesses the image data and sends it to the model for scoring.
+5)	The web service created by AzureML preprocesses the image data and sends it to the model for scoring.
 6)	The predicted categories with their scores are then returned to the client.
 
 
