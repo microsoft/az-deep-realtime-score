@@ -10,4 +10,4 @@ variables:
 - group: AzureKeyVault
 
 jobs:
-- template: jobs/build.yml
+- template: build.yml
