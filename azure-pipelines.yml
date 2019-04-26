@@ -115,7 +115,7 @@ jobs:
 
   - bash: |
       source activate deployment_aml
-      export PYTHONPATh=$(pwd)/{{cookiecutter.project_template}}/Keras_Tensorflow:${PYTHONPATH}
+      export PYTHONPATh=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow/iotedge
       papermill 05_TearDown.ipynb 05_TearDown_output.ipynb \
       	--log-output \
