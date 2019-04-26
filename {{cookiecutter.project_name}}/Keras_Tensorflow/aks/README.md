@@ -21,9 +21,10 @@ which addresses the first three prerequisites.
 ## Steps
 Please follow these steps to set up your environment and run notebooks.  They setup the notebooks to use Docker and Azure seamlessly.
 
-1. Add your user to the docker group (after executing this command, exit and start a new bash shell): 
+1. Add your user to the docker group: 
    ```
    sudo usermod -aG docker $USER
+   newgrp docker
    ```
    To verify whether you have correct configuration, try executing `docker ps` command. You should not get `permission denied` errors.
 

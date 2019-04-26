@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 # Install the repository configuration. Replace <release> with 16.04 or 18.04 as appropriate for your release of Ubuntu
 curl https://packages.microsoft.com/config/ubuntu/__release/prod.list > ./microsoft-prod.list

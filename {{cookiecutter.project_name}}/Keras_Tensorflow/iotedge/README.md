@@ -4,10 +4,10 @@ In this tutorial, we introduce how to deploy an ML/DL (machine learning/deep lea
 
 Azure IoT Edge is an Internet of Things (IoT) service that builds on top of Azure IoT Hub. It is a hybrid solution combining the benefits of the two scenarios: *IoT in the Cloud* and *IoT on the Edge*. This service is meant for customers who want to analyze data on devices, a.k.a. "at the edge", instead of in the cloud. By moving parts of your workload to the edge, your devices can spend less time sending messages to the cloud and react more quickly to changes in status. On the other hand, Azure IoT Hub provides centralized way to manage Azure IoT Edge devices, and make it easy to train ML models in the Cloud and deploy the trained models on the Edge devices.  
 
-In this example, we deploy a trained Keras (tensorflow) CNN model to the edge device. When the image data is generated from a process pipeline and fed into the edge device, the deployed model can make predictions right on the edge device without accessing to the cloud. Following diagram shows the major components of an Azure IoT edge device. Source code and full documentation are linked below.
+In this example, we deploy a trained Keras (Tensorflow) CNN model to the edge device. When the image data is generated from a process pipeline and fed into the edge device, the deployed model can make predictions right on the edge device without accessing to the cloud. Following diagram shows the major components of an Azure IoT edge device. Source code and full documentation are linked below.
 
 <p align="center">
-<img src="azureiotedgeruntime.png" alt="logo" width="90%"/>
+<img src="https://happypathspublic.blob.core.windows.net/aksdeploymenttutorialaml/azureiotedgeruntime.png" alt="logo" width="90%"/>
 </p>
 
 We perform following steps for the deployment.
@@ -39,9 +39,10 @@ which addresses the first three prerequisites.
 ## Steps
 Please follow these steps to set up your environment and run notebooks.  They setup the notebooks to use Docker and Azure seamlessly.
 
-1. Add your user to the docker group (after executing this command, exit and start a new bash shell): 
+1. Add your user to the docker group: 
    ```
    sudo usermod -aG docker $USER
+   newgrp docker
    ```
    To verify whether you have correct configuration, try executing `docker ps` command. You should not get `permission denied` errors.
 

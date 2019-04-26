@@ -9,7 +9,7 @@ In this repository there are a number of tutorials in Jupyter notebooks that hav
   - [Azure IoT Edge](./{{cookiecutter.project_name}}/Keras_Tensorflow/iotedge)
 * [Pytorch](./{{cookiecutter.project_name}}/Pytorch) (coming soon)
 
-![alt text](static/example.png "Example Classification")
+![alt text](https://happypathspublic.blob.core.windows.net/aksdeploymenttutorialaml/example.png "Example Classification")
  
  For each framework, we go through the following steps:
  * Create an AML Workspace

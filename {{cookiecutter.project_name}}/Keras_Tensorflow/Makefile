@@ -81,7 +81,10 @@ test-notebook5:
 	papermill aks/04_DeployOnAKS.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
-		-k python3
+		-k python3 \
+		-p aks_name ${AKS_NAME} \
+		-p aks_location ${WORKSPACE_REGION} \
+		-p aks_service_name ${AKS_SERVICE_NAME}
 
 test-notebook6:
 	source activate deployment_aml
@@ -89,7 +92,10 @@ test-notebook6:
 	papermill aks/05_TestWebApp.ipynb test.ipynb \
 		--log-output \
 		--no-progress-bar \
-		-k python3
+		-k python3 \
+		-p aks_name ${AKS_NAME} \
+		-p aks_location ${WORKSPACE_REGION} \
+		-p aks_service_name ${AKS_SERVICE_NAME}
 
 test-notebook7:
 	source activate deployment_aml
@@ -131,13 +137,13 @@ test-notebook-iot2:
 
 
 test-cookiecutter-aks:
-	cookiecutter --no-input https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout mat_yzhang_cc \
+	cookiecutter --no-input https://github.com/Microsoft/AKSDeploymentTutorialAML.git \
 							subscription_id="${SUBSCRIPTION_ID}" \
 							workspace_region=${WORKSPACE_REGION} \
 							deployment_type="aks"
 
 test-cookiecutter-iot:
-	cookiecutter --no-input https://github.com/Microsoft/AKSDeploymentTutorialAML.git --checkout mat_yzhang_cc \
+	cookiecutter --no-input https://github.com/Microsoft/AKSDeploymentTutorialAML.git \
 							subscription_id=${SUBSCRIPTION_ID} \
 							workspace_region=${WORKSPACE_REGION} \
 							deployment_type="iotedge"
