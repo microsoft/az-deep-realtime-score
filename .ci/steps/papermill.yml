@@ -7,7 +7,7 @@ parameters:
 
 steps:
 - bash: |
-    conda activate deployment_aml
+    source activate deployment_aml
     export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
     cd ${{parameters.location}}
     echo Execute ${{parameters.notebook}}
