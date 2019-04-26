@@ -108,6 +108,7 @@ jobs:
 
   - bash: |
       source activate deployment_aml
+      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
       cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
       papermill 07_TearDown.ipynb 07_TearDown_output.ipynb --log-output --no-progress-bar -k python3
     displayName : '07_TearDown.ipynb'
