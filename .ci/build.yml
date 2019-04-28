@@ -56,6 +56,7 @@ jobs:
                 -p aks_name 'aksdeployamlaks' \
                 -p aks_service_name 'aksamlsvc' \
                 -p aks_location $(azureregion)
+      sleep 1m
     displayName : '04_DeployOnAKS.ipynb'
   - template: steps/papermill.yml
     parameters:
@@ -77,6 +78,7 @@ jobs:
       	-p device_id mygpudevice \
       	-p module_name mygpumodule
     displayName: '04_DeployOnIOTedge.ipynb'
+
   - template: steps/papermill.yml
     parameters:
       notebook: 07_TearDown.ipynb
@@ -89,6 +91,7 @@ jobs:
       echo Remove All Docker Containers
       docker stop $(docker ps -a -q)
       docker rm $(docker ps -a -q)
+      docker rmi $(docker images -q)
 
       echo Remove Conda Environment
       conda remove -n deployment_aml --all -q --force -y
