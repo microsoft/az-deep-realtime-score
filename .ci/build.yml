@@ -1,14 +1,3 @@
-# Pipeline for testing AKSDeploymentTutorial_AML
-
-trigger:
-  batch: true
-  branches:
-    include:
-    - master
-
-variables:
-- group: AzureKeyVault
-
 jobs:
 - job: AKSDeployAMLJob
   timeoutInMinutes: 300
@@ -44,28 +33,18 @@ jobs:
                 -p subscription_id $(subscriptionid) \
                 -p image_name 'modelimg'
     displayName : '00_AMLSetup.ipynb'
-
-  - bash: |
-      source activate deployment_aml
-      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow
-      papermill 01_DevelopModel.ipynb 01_DevelopModel_output.ipynb --log-output --no-progress-bar -k python3
-    displayName : '01_DevelopModel.ipynb'
-
-  - bash: |
-      source activate deployment_aml
-      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow
-      papermill 02_DevelopModelDriver.ipynb 02_DevelopModelDriver_output.ipynb --log-output --no-progress-bar -k python3
-    displayName : '02_DevelopModelDriver.ipynb'
-
-  - bash: |
-      source activate deployment_aml
-      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow
-      papermill 03_BuildImage.ipynb 03_BuildImage_output.ipynb --log-output --no-progress-bar -k python3
-    displayName : '03_BuildImage.ipynb'
-
+  - template: steps/papermill.yml
+    parameters:
+      notebook: 01_DevelopModel.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+  - template: steps/papermill.yml
+    parameters:
+      notebook: 02_DevelopModelDriver.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+  - template: steps/papermill.yml
+    parameters:
+      notebook: 03_BuildImage.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
   - bash: |
       source activate deployment_aml
       export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
@@ -77,22 +56,16 @@ jobs:
                 -p aks_name 'aksdeployamlaks' \
                 -p aks_service_name 'aksamlsvc' \
                 -p aks_location $(azureregion)
+      sleep 1m
     displayName : '04_DeployOnAKS.ipynb'
-
-  - bash: |
-      source activate deployment_aml
-      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
-      papermill 05_TestWebApp.ipynb 05_TestWebApp_output.ipynb --log-output --no-progress-bar -k python3
-    displayName : '05_TestWebApp.ipynb'
-
-  - bash: |
-      source activate deployment_aml
-      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
-      papermill 06_SpeedTestWebApp.ipynb 06_SpeedTestWebApp_output.ipynb --log-output --no-progress-bar -k python3
-    displayName : '06_SpeedTestWebApp.ipynb'
-
+  - template: steps/papermill.yml
+    parameters:
+      notebook: 05_TestWebApp_output.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow/aks"
+  - template: steps/papermill.yml
+    parameters:
+      notebook: 06_SpeedTestWebApp.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow/aks"
   - bash: |
       source activate deployment_aml
       export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
@@ -106,36 +79,28 @@ jobs:
       	-p module_name mygpumodule
     displayName: '04_DeployOnIOTedge.ipynb'
 
-  - bash: |
-      source activate deployment_aml
-      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
-      papermill 07_TearDown.ipynb 07_TearDown_output.ipynb --log-output --no-progress-bar -k python3
-    displayName : '07_TearDown.ipynb'
-
-  - bash: |
-      source activate deployment_aml
-      export PYTHONPATh=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow/iotedge
-      papermill 05_TearDown.ipynb 05_TearDown_output.ipynb \
-      	--log-output \
-      	--no-progress-bar \
-      	-k python3
-    displayName: '05_TearDown.ipynb'
-
+  - template: steps/papermill.yml
+    parameters:
+      notebook: 07_TearDown.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow/aks"
+  - template: steps/papermill.yml
+    parameters:
+      notebook: 05_TearDown.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow/iotedge"
   - bash: |
       echo Remove All Docker Containers
       docker stop $(docker ps -a -q)
       docker rm $(docker ps -a -q)
+      docker rmi $(docker images -q)
 
       echo Remove Conda Environment
       conda remove -n deployment_aml --all -q --force -y
-      conda env list  
-      
+      conda env list
+
       echo Ensure Resource Group Deletion
        existResponse=$(az group exists -n $(azureresourcegroup))
       if [ "$existResponse" == "true" ]; then
-        echo Deleting project resource group  
+        echo Deleting project resource group
         az group delete --name $(azureresourcegroup) --yes
       else
         echo Project resource group did not exist
