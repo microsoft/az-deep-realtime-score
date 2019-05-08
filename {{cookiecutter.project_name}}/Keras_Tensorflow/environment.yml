@@ -8,7 +8,6 @@ dependencies:
 - cudatoolkit==9.0
 - tensorflow-gpu==1.10.0
 - urllib3==1.23
-- locustio==0.11.0
 - pip:
     # Required packages for AzureML execution, history, and data preparation.
   - papermill==0.14.1
@@ -21,3 +20,4 @@ dependencies:
   - azure-cli
   - keras==2.2.0
   - azureml-sdk[notebooks, contrib]
+  - locustio==0.11.0
