@@ -108,3 +108,16 @@ jobs:
       echo Done Cleanup
     displayName: 'Cleanup Task'
     condition: always()
+    
+  - task: CreateWorkItem@1
+    inputs:
+      workItemType: 'Issue'
+      title: $(System.TeamProject) - Build $(Build.BuildNumber) Failed
+      assignedTo: 'Yan Zhang <zhangya@microsoft.com>'
+      associate: true
+      teamProject: $(System.TeamProject)
+    
+      fieldMappings: |
+        Description=Branch: Branch $(Build.SourceBranch) failed to build. Go to Boards>WorkItems and tag the failure type.
+    displayName: 'Create work item on failure'
+    condition: failed()      
