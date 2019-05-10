@@ -19,5 +19,5 @@ dependencies:
   - tqdm==4.23.4
   - azure-cli
   - keras==2.2.0
-  - azureml-sdk[notebooks, contrib]
+  - azureml-sdk[notebooks, contrib]==1.0.33
   - locustio==0.11.0
