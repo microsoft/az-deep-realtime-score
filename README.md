@@ -3,7 +3,7 @@
 # Deploy Deep Learning CNN using Azure Machine Learning
 ## Overview
 In this repository there are a number of tutorials in Jupyter notebooks that have step-by-step instructions on how to deploy a pretrained deep learning model on a GPU enabled Kubernetes cluster throught Azure Machine Learning (AzureML). The tutorials cover how to deploy models from the following deep learning frameworks on specific deployment target:
-
+ 
 * Keras (TensorFlow backend)
   - [Azure Kubernetes Service (AKS) Cluster with GPUs](./{{cookiecutter.project_name}}/Keras_Tensorflow/aks)
   - [Azure IoT Edge](./{{cookiecutter.project_name}}/Keras_Tensorflow/iotedge)
