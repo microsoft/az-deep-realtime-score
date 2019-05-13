@@ -35,14 +35,8 @@ sudo apt-get install iotedge -y --no-install-recommends
 # Manual provisioning IoT edge device
 sudo sed -i "s#\(device_connection_string: \).*#\1\"__device_connection_string\"#g" /etc/iotedge/config.yaml
 
-############################################
-
-# double check if the IP address of the docker0 interface is 172.17.01 by using ifconfig command
-sudo sed -i "s#\(management_uri: \).*#\1\"__management_uri\"#g" /etc/iotedge/config.yaml
-sudo sed -i "s#\(workload_uri: \).*#\1\"__workload_uri\"#g" /etc/iotedge/config.yaml
-
-# restart the daemon
 sudo systemctl restart iotedge
+
 ###########################################
 
 # Verify successful installation
