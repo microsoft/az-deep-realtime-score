@@ -74,7 +74,7 @@ jobs:
     displayName : '04_DeployOnAKS.ipynb'
   - template: steps/papermill.yml
     parameters:
-      notebook: 05_TestWebApp_output.ipynb
+      notebook: 05_TestWebApp.ipynb
       location: "{{cookiecutter.project_name}}/Keras_Tensorflow/aks"
   - template: steps/papermill.yml
     parameters:
@@ -110,6 +110,9 @@ jobs:
       echo Remove Conda Environment
       conda remove -n deployment_aml --all -q --force -y
       conda env list
+
+      echo removing extensions
+      rm -r -f /home/CicdAdmin/.azure/cliextensions/azure-cli-iot-ext
 
       echo Ensure Resource Group Deletion
        existResponse=$(az group exists -n $(azureresourcegroup))
