@@ -29,7 +29,9 @@ jobs:
       conda env list
       echo Login Azure Account
       which az
+
       az extension remove --name azure-cli-iot-ext --debug
+
       az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
       az account set --subscription $(subscriptionid)
     displayName: 'Build Configuration'
