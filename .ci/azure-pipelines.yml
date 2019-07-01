@@ -28,9 +28,6 @@ jobs:
       source activate deployment_aml
       conda env list
       echo Login Azure Account
-      which az
-
-      az extension remove --name azure-cli-iot-ext --debug
 
       az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
       az account set --subscription $(subscriptionid)
@@ -109,17 +106,16 @@ jobs:
       docker rm $(docker ps -a -q)
       docker rmi $(docker images -q)
 
+      echo Removing extensions
       az extension remove --name azure-cli-iot-ext --debug
+      rm -r -f /home/CicdAdmin/.azure/cliextensions/azure-cli-iot-ext
 
       echo Remove Conda Environment
       conda remove -n deployment_aml --all -q --force -y
       conda env list
 
-      echo removing extensions
-      rm -r -f /home/CicdAdmin/.azure/cliextensions/azure-cli-iot-ext
-
       echo Ensure Resource Group Deletion
-       existResponse=$(az group exists -n $(azureresourcegroup))
+      existResponse=$(az group exists -n $(azureresourcegroup))
       if [ "$existResponse" == "true" ]; then
         echo Deleting project resource group
         az group delete --name $(azureresourcegroup) --yes
