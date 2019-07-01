@@ -28,6 +28,7 @@ jobs:
       source activate deployment_aml
       conda env list
       echo Login Azure Account
+      which az
       az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
       az account set --subscription $(subscriptionid)
     displayName: 'Build Configuration'
