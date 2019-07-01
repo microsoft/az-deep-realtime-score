@@ -16,7 +16,7 @@ jobs:
   cancelTimeoutInMinutes: 2
   pool:
     name: AKSDeployment
-    vmImage: 'GpuSelfHostedAgent'
+    vmImage: 'GpuSelfHostedAgent'`
 
   steps:
   - script: echo Hello, AKSDeployment!
@@ -29,7 +29,7 @@ jobs:
       conda env list
       echo Login Azure Account
       which az
-      az --debug
+      az extension remove --name azure-cli-iot-ext --debug
       az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
       az account set --subscription $(subscriptionid)
     displayName: 'Build Configuration'
@@ -106,6 +106,8 @@ jobs:
       docker stop $(docker ps -a -q)
       docker rm $(docker ps -a -q)
       docker rmi $(docker images -q)
+
+      az extension remove --name azure-cli-iot-ext --debug
 
       echo Remove Conda Environment
       conda remove -n deployment_aml --all -q --force -y
