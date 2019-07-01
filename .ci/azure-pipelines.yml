@@ -16,7 +16,7 @@ jobs:
   cancelTimeoutInMinutes: 2
   pool:
     name: AKSDeployment
-    vmImage: 'GpuSelfHostedAgent'`
+    vmImage: 'GpuSelfHostedAgent'
 
   steps:
   - script: echo Hello, AKSDeployment!
