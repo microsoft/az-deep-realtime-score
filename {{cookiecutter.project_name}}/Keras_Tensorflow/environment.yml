@@ -3,21 +3,21 @@ dependencies:
   # The python interpreter version.
   # Currently Azure ML only supports 3.5.2 and later.
 - python=3.6
-- nb_conda==2.2.0
-- tornado==4.5.3
+- nb_conda
+- tornado
 - cudatoolkit==9.0
 - tensorflow-gpu==1.10.0
-- urllib3==1.23
+- urllib3
 - pip:
     # Required packages for AzureML execution, history, and data preparation.
-  - papermill==1.0.1
-  - python-dotenv==0.10.1
-  - Pillow==5.2.0
+  - papermill
+  - python-dotenv
+  - Pillow
   - wget==3.2
-  - matplotlib==2.2.2
-  - toolz==0.9.0
-  - tqdm==4.32.2
+  - matplotlib
+  - toolz
+  - tqdm
   - azure-cli
   - keras==2.2.0
   - azureml-sdk[notebooks, contrib]
-  - locustio==0.11.0
+  - locustio
