@@ -1,4 +1,4 @@
-# Pipeline for testing HyperdriveDeepLearning
+# Pipeline for testing AKSDeploymentTutorialAML
 
 trigger:
   batch: true
