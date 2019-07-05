@@ -21,3 +21,4 @@ dependencies:
   - keras==2.2.0
   - azureml-sdk[notebooks, contrib]
   - locustio
+  - prompt-toolkit==2.0.9
