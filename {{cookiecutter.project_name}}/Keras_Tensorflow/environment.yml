@@ -17,7 +17,7 @@ dependencies:
   - matplotlib
   - toolz
   - tqdm
-  - azure-cli
+  - azure-cli==2.0.63
   - keras==2.2.0
   - azureml-sdk[notebooks, contrib]
   - locustio
