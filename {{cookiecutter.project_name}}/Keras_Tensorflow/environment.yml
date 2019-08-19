@@ -19,7 +19,7 @@ dependencies:
   - tqdm
   - azure-cli==2.0.63
   - keras==2.2.0
-  - azureml-sdk[notebooks, contrib]
+  - azureml-sdk[notebooks, contrib]==1.0.55
   - locustio
   - prompt-toolkit==2.0.9
 
