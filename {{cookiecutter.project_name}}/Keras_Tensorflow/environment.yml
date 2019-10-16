@@ -6,7 +6,7 @@ dependencies:
 - nb_conda
 - tornado
 - cudatoolkit==9.0
-- tensorflow-gpu==1.10.0
+- tensorflow-gpu==1.14.0
 - urllib3
 - pip:
     # Required packages for AzureML execution, history, and data preparation.
