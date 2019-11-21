@@ -97,6 +97,6 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 
-### Related projects
+# Related projects
 
 [Microsoft AI Labs Github](https://aka.ms/ai-labs) Find other Best Practice projects, and Azure AI Designed patterns in our central repository. 
