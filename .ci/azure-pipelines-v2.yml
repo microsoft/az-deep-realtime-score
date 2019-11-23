@@ -33,6 +33,9 @@ jobs:
 
   timeoutInMinutes: 180
 
+  pool:
+    name: $(Agent)
+
   workspace:
     clean: all
 
