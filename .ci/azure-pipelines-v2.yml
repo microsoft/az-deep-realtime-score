@@ -1,4 +1,4 @@
-# MLAKSDeploy Pipeline
+# DLAKSDeploy Pipeline
 resources:
   repositories:
     - repository: aitemplates
