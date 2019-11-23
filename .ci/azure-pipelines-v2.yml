@@ -17,7 +17,7 @@ variables:
   DeploymentName: DLAKSDeployAMLJob
   ProjectLocation: "{{cookiecutter.project_name}}/Keras_Tensorflow"
   PythonPath: /$(ProjectLocation)
-  Agent: "Hosted Ubuntu 1604"
+  Agent: "agce-ai"
 
 # In additional to the above variables, the "template" parameter of the last step must also be hard coded for each workload
 
