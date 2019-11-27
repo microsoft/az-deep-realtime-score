@@ -24,6 +24,8 @@ pr:
 stages:
 - template: .ci/stages/deploy_notebooks_stages_v2.yml@aitemplates
   parameters:
+    Agent: $(Agent_Name)
+    Demands: GPU
     jobDisplayName: DLAKSDeployAMLJob
     DefaultWorkingDirectory: $(System.DefaultWorkingDirectory)
     workload_vars: ../vars/dl_realtime_scoring.yml
