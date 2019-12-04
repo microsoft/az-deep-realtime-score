@@ -5,22 +5,20 @@ dependencies:
 - python=3.6
 - nb_conda
 - tornado
-- cudatoolkit
-- tensorflow-gpu
+- cudatoolkit==9.0
+- tensorflow-gpu==1.10.0
 - urllib3
 - pip:
     # Required packages for AzureML execution, history, and data preparation.
-  - papermill
-  - python-dotenv
-  - Pillow
-  - wget
-  - matplotlib
-  - toolz
-  - tqdm
-  - azure-cli
+  - papermill==1.1.0
+  - python-dotenv==0.10.3
+  - Pillow==6.1.0
+  - wget==3.2
+  - matplotlib==3.1.1
+  - toolz==0.9.0
+  - tqdm==4.32.2
+  - azure-cli==2.0.63
   - keras==2.2.0
   - azureml-sdk[notebooks, contrib]==1.0.57
-  - locustio
-  - prompt-toolkit
-  - git+https://github.com/Microsoft/StatisticsTracker
-  - PyOpenSSL
+  - locustio==0.11.0
+  - prompt-toolkit==2.0.9
