@@ -1,7 +1,7 @@
 # DL Realtime Scoring Pipeline
 #
 # A Github Service Connection must also be created with the name "AIArchitecturesAndPractices-GitHub"
-# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/demands?view=azure-devops&tabs=yaml
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml#create-a-service-connection
 #
 # An Agent_Name Variable must be creating in the Azure DevOps UI. 
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables
