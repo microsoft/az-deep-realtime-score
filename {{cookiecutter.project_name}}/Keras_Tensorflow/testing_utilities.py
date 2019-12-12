@@ -71,9 +71,9 @@ def _plot_prediction_bar(ax, r):
 
 
 def plot_predictions(images, classification_results):
-    if len(images) != 6:
-        raise Exception("This method is only designed for 6 images")
-    gs = gridspec.GridSpec(2, 3)
+    if len(images) != 3:
+        raise Exception("This method is only designed for 3 images")
+    gs = gridspec.GridSpec(1, 3)
     fig = plt.figure(figsize=(12, 9))
     gs.update(hspace=0.1, wspace=0.001)
 
