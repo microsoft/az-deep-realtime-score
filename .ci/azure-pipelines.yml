@@ -32,7 +32,6 @@ jobs:
       az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
       az account set --subscription $(subscriptionid)
     displayName: 'Build Configuration'
-    failOnStderr: true
 
   - bash: |
       source activate deployment_aml
