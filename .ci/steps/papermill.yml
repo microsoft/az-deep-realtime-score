@@ -17,3 +17,4 @@ steps:
       -k python3
     sleep 30
   displayName: '${{parameters.notebook}}'
+  failOnStderr: true
