@@ -38,7 +38,7 @@ jobs:
     inputs:      
       azureSubscription: $(subscriptionid)
       scriptLocation: inlineScript
-      failOnStderr: True
+      failOnStandardError: True
       inlineScript: |
         source activate deployment_aml
         cd {{cookiecutter.project_name}}/Keras_Tensorflow
