@@ -36,7 +36,7 @@ jobs:
   - task: AzureCLI@1
     displayName : '00_AMLSetup.ipynb'
     inputs:      
-      azureSubscription: $(subscriptionid)
+      azureSubscription: $(subscription)
       scriptLocation: inlineScript
       failOnStandardError: True
       inlineScript: |
