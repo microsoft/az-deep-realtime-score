@@ -21,5 +21,3 @@ steps:
         --no-progress-bar \
         -k python3
       sleep 30
-      echo $result
-
