@@ -8,6 +8,7 @@ dependencies:
 - cudatoolkit==9.0
 - tensorflow-gpu==1.14.0
 - urllib3
+- pip
 - pip:
     # Required packages for AzureML execution, history, and data preparation.
   - papermill==1.1.0
