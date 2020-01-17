@@ -32,21 +32,25 @@ jobs:
       az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
       az account set --subscription $(subscriptionid)
     displayName: 'Build Configuration'
-
-  - bash: |
-      source activate deployment_aml
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow
-      papermill 00_AMLSetup.ipynb 00_AMLSetup_output.ipynb \
-                --log-output \
-                --no-progress-bar \
-                -k python3 \
-                -p resource_group $(azureresourcegroup) \
-                -p workspace_name $(workspacename) \
-                -p workspace_region  $(azureregion) \
-                -p subscription_id $(subscriptionid) \
-                -p image_name 'modelimg'
+  
+  - task: AzureCLI@1
     displayName : '00_AMLSetup.ipynb'
-    failOnStderr: true
+    inputs:      
+      azureSubscription: $(subscriptionid)
+      scriptLocation: inlineScript
+      failOnStderr: True
+      inlineScript: |
+        source activate deployment_aml
+        cd {{cookiecutter.project_name}}/Keras_Tensorflow
+        papermill 00_AMLSetup.ipynb 00_AMLSetup_output.ipynb \
+                  --log-output \
+                  --no-progress-bar \
+                  -k python3 \
+                  -p resource_group $(azureresourcegroup) \
+                  -p workspace_name $(workspacename) \
+                  -p workspace_region  $(azureregion) \
+                  -p subscription_id $(subscriptionid) \
+                  -p image_name 'modelimg'
 
   - template: steps/papermill.yml
     parameters:
