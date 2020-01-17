@@ -51,45 +51,53 @@ jobs:
                   -p subscription_id $(subscriptionid) \
                   -p image_name 'modelimg'
 
-  - template: steps/papermill.yml
+  - template: steps/az_papermill.yml
     parameters:
       notebook: 01_DevelopModel.ipynb
       location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      subscription: $(subscription)
 
-  - template: steps/papermill.yml
+  - template: steps/az_papermill.yml
     parameters:
       notebook: 02_DevelopModelDriver.ipynb
       location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      subscription: $(subscription)
 
-  - template: steps/papermill.yml
+  - template: steps/az_papermill.yml
     parameters:
       notebook: 03_BuildImage.ipynb
       location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      subscription: $(subscription)
 
-  - bash: |
-      source activate deployment_aml
-      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
-      papermill 04_DeployOnAKS.ipynb 04_DeployOnAKS_output.ipynb \
-                --log-output \
-                --no-progress-bar \
-                -k python3 \
-                -p aks_name 'aksdeployamlaks' \
-                -p aks_service_name 'aksamlsvc' \
-                -p aks_location $(azureregion)
-      sleep 1m
+  - task: AzureCLI@1
     displayName : '04_DeployOnAKS.ipynb'
-    failOnStderr: true
+    inputs:      
+      azureSubscription: $(subscription)
+      scriptLocation: inlineScript
+      inlineScript: |
+        source activate deployment_aml
+        export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
+        cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
+        papermill 04_DeployOnAKS.ipynb 04_DeployOnAKS_output.ipynb \
+                  --log-output \
+                  --no-progress-bar \
+                  -k python3 \
+                  -p aks_name 'aksdeployamlaks' \
+                  -p aks_service_name 'aksamlsvc' \
+                  -p aks_location $(azureregion)
+        sleep 1m
 
-  - template: steps/papermill.yml
+  - template: steps/az_papermill.yml
     parameters:
       notebook: 05_TestWebApp.ipynb
       location: "{{cookiecutter.project_name}}/Keras_Tensorflow/aks"
+      subscription: $(subscription)
 
-  - template: steps/papermill.yml
+  - template: steps/az_papermill.yml
     parameters:
       notebook: 06_SpeedTestWebApp.ipynb
       location: "{{cookiecutter.project_name}}/Keras_Tensorflow/aks"
+      subscription: $(subscription)
 
 #  - bash: |
 #      source activate deployment_aml
@@ -104,10 +112,11 @@ jobs:
 #      	-p module_name mygpumodule
 #    displayName: '04_DeployOnIOTedge.ipynb'
 
-  - template: steps/papermill.yml
+  - template: steps/az_papermill.yml
     parameters:
       notebook: 07_TearDown.ipynb
       location: "{{cookiecutter.project_name}}/Keras_Tensorflow/aks"
+      subscription: $(subscription)
 
 #  - template: steps/papermill.yml
 #    parameters:
