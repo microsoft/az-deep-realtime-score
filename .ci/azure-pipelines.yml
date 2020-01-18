@@ -76,7 +76,7 @@ jobs:
       notebook: aks/04_DeployOnAKS.ipynb
       location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
       azureSubscription: $(subscriptionid)
-      conda: ${{parameters.conda}}
+      conda: deployment_aml
       aks_name: 'aksdeployamlaks'
       aks_location: $(azureregion)
       aks_service_name: 'aksamlsvc'
