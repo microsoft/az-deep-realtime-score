@@ -45,7 +45,7 @@ jobs:
       azureresourcegroup: $(azureresourcegroup)
       workspacename: $(workspacename)
       azureregion: $(azureregion)
-  	aksimagename: 'modelimg'
+      aksimagename: 'modelimg'
 
   - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
@@ -71,7 +71,7 @@ jobs:
       conda: deployment_aml
       azure_subscription: $(subscriptionid)
 
-  - template: azpapermill.yml
+  - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
       notebook: aks/04_DeployOnAKS.ipynb
       location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
