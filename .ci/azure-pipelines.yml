@@ -31,14 +31,14 @@ jobs:
 
   - template: .ci/steps/config_conda.yml@aitemplates
     parameters:
-      conda_location: {{cookiecutter.project_name}}/Keras_Tensorflow
-      azureSubscription: $(subscription)
+      conda_location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscription) 
       conda: deployment_aml
-      
+
   - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
       notebook: 00_AMLSetup.ipynb
-      location: {{cookiecutter.project_name}}/Keras_Tensorflow
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
       azureSubscription: $(subscription)
       conda: deployment_aml
       azure_subscription: $(subscriptionid)
@@ -46,78 +46,64 @@ jobs:
       workspacename: $(workspacename)
       azureregion: $(azureregion)
   	aksimagename: 'modelimg'
-  
-  - template: .ci/steps/azpapermill.yml@aitemplates
-    parameters:
-  	notebook: 01_DevelopModel.ipynb
-  	location: {{cookiecutter.project_name}}/Keras_Tensorflow
-  	azureSubscription: $(subscription)
-  	conda: deployment_aml
-  	azure_subscription: $(subscriptionid)
 
   - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
-  	notebook: 02_DevelopModelDriver.ipynb
-  	location: {{cookiecutter.project_name}}/Keras_Tensorflow
-  	azureSubscription: $(subscription)
-  	conda: deployment_aml
-  	azure_subscription: $(subscriptionid)
+      notebook: 01_DevelopModel.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscription)
+      conda: deployment_aml
+      azure_subscription: $(subscriptionid)
 
   - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
-  	notebook: 03_BuildImage.ipynb
-  	location: {{cookiecutter.project_name}}/Keras_Tensorflow
-  	azureSubscription: $(subscription)
-  	conda: deployment_aml
-  	azure_subscription: $(subscriptionid)
+      notebook: 02_DevelopModelDriver.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscription)
+      conda: deployment_aml
+      azure_subscription: $(subscriptionid)
+
+  - template: .ci/steps/azpapermill.yml@aitemplates
+    parameters:
+      notebook: 03_BuildImage.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscription)
+      conda: deployment_aml
+      azure_subscription: $(subscriptionid)
 
   - template: azpapermill.yml
     parameters:
       notebook: aks/04_DeployOnAKS.ipynb
-      location: {{cookiecutter.project_name}}/Keras_Tensorflow
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
       azureSubscription: $(subscriptionid)
       conda: ${{parameters.conda}}
       aks_name: 'aksdeployamlaks'
       aks_location: $(azureregion)
       aks_service_name: 'aksamlsvc'
-      python_path: /{{cookiecutter.project_name}}/Keras_Tensorflow
+      python_path: "/{{cookiecutter.project_name}}/Keras_Tensorflow"
 
   - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
-  	notebook: 05_TestWebApp.ipynb
-  	location: {{cookiecutter.project_name}}/Keras_Tensorflow
-  	azureSubscription: $(subscription)
-  	conda: deployment_aml
-  	azure_subscription: $(subscriptionid)
+      notebook: 05_TestWebApp.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscription)
+      conda: deployment_aml
+      azure_subscription: $(subscriptionid)
 
   - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
-  	notebook: 06_SpeedTestWebApp.ipynb
-  	location: {{cookiecutter.project_name}}/Keras_Tensorflow
-  	azureSubscription: $(subscription)
-  	conda: deployment_aml
-  	azure_subscription: $(subscriptionid)
-
-#  - bash: |
-#      source activate deployment_aml
-#      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-#      cd {{cookiecutter.project_name}}/Keras_Tensorflow/iotedge
-#      papermill 04_DeployOnIOTedge.ipynb 04_DeployOnIOTedge_output.ipynb \
-#      	--log-output \
-#      	--no-progress-bar \
-#      	-k python3 \
-#      	-p iot_hub_name fstlstnameiothub \
-#      	-p device_id mygpudevice \
-#      	-p module_name mygpumodule
-#    displayName: '04_DeployOnIOTedge.ipynb'
+      notebook: 06_SpeedTestWebApp.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscription)
+      conda: deployment_aml
+      azure_subscription: $(subscriptionid)
 
   - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
-  	notebook: 07_TearDown.ipynb
-  	location: {{cookiecutter.project_name}}/Keras_Tensorflow
-  	azureSubscription: $(subscription)
-  	conda: deployment_aml
-  	azure_subscription: $(subscriptionid)
+      notebook: 07_TearDown.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscription)
+      conda: deployment_aml
 
   - bash: |
       echo Remove All Docker Containers
@@ -157,3 +143,4 @@ jobs:
         Description=Branch: Branch $(Build.SourceBranch) failed to build. Go to Boards>WorkItems and tag the failure type.
     displayName: 'Create work item on failure'
     condition: failed()
+
