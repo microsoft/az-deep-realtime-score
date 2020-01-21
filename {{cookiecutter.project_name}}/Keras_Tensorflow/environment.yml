@@ -18,6 +18,7 @@ dependencies:
   - toolz==0.9.0
   - tqdm==4.32.2
   - azure-cli==2.0.63
+  - azure-core
   - keras==2.2.0
   - azureml-sdk[notebooks, contrib]==1.0.57
   - locustio==0.11.0
