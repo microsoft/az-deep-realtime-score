@@ -1,0 +1,41 @@
+# DL Hyperparameter Tuning and Training Pipeline
+#
+# A Github Service Connection must also be created with the name "AIArchitecturesAndPractices-GitHub"
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/demands?view=azure-devops&tabs=yaml
+#
+# An Agent_Name Variable must be creating in the Azure DevOps UI. 
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables
+#
+# This must point to an Agent Pool, with a Self-Hosted Linux VM with a GPU.
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-linux?view=azure-devops
+# 
+# A "Demand" must be set on the GPU VM. This enables a mixed VM pool. The Demand should be GPU=True
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/demands?view=azure-devops&tabs=yaml
+
+resources:
+  repositories:
+    - repository: aitemplates
+      type: github
+      name: microsoft/AI
+      endpoint: AIArchitecturesAndPractices-GitHub
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - mabou/instrument
+
+pr:
+  autoCancel: true
+  branches:
+    include:
+    - mabou/instrument
+
+stages:
+- template: .ci/stages/deploy_notebooks_stages_v2.yml@aitemplates
+  parameters:
+    Agent: $(Agent_Name)
+    Demands: GPU
+    jobDisplayName: DLScoreDeployJob
+    DefaultWorkingDirectory: $(System.DefaultWorkingDirectory)
+    workload_vars: ../vars/dlhyperparametertuning_vars.yml
