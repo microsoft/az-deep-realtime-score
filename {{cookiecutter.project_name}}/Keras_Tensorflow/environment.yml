@@ -7,6 +7,7 @@ dependencies:
 - tornado
 - cudatoolkit==9.0
 - tensorflow-gpu==1.14.0
+- pandas==0.25.3
 - urllib3
 - pip
 - pip:
@@ -19,9 +20,9 @@ dependencies:
   - toolz==0.9.0
   - tqdm==4.32.2
   - azure-cli==2.0.63
+  - azure-core
   - keras==2.2.0
   - azureml-sdk[notebooks, contrib]==1.0.57
-  - azure-core
   - locustio==0.11.0
   - prompt-toolkit==2.0.9
   - git+https://github.com/microsoft/AI-Utilities.git
