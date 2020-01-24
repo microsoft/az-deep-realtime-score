@@ -7,6 +7,7 @@ dependencies:
 - tornado
 - cudatoolkit==9.0
 - tensorflow-gpu==1.14.0
+- pandas==0.25.3
 - urllib3
 - pip:
     # Required packages for AzureML execution, history, and data preparation.
