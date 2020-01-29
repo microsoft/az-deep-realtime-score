@@ -14,9 +14,14 @@ jobs:
 - job: AKSDeployAMLJob
   timeoutInMinutes: 300
   cancelTimeoutInMinutes: 2
+
   pool:
     name: AKSDeployment
     vmImage: 'GpuSelfHostedAgent'
+
+  strategy:
+    maxParallel: 1
+    matrix: {"eastus": {"azureregion": "eastus", "azureresourcegroup" : "aksdplyamleastus"},"southcentralus": {"azureregion": "southcentralus", "azureresourcegroup" : "aksdplyamlsouthctrl" },"westus2": {"azureregion": "westus2", "azureresourcegroup" : "aksdplyamlwestus"}}
 
   steps:
   - script: echo Hello, AKSDeployment!
