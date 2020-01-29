@@ -21,7 +21,7 @@ jobs:
 
   strategy:
     maxParallel: 1
-    matrix: {"eastus": {"azureregion": "eastus", "azureresourcegroup" : "aksdplyamleastus"},"southcentralus": {"azureregion": "southcentralus", "azureresourcegroup" : "aksdplyamlsouthctrl" },"westus2": {"azureregion": "westus2", "azureresourcegroup" : "aksdplyamlwestus"}}
+    matrix: {"eastus": {"azureregion": "eastus", "azureresourcegroup" : "aksdplyamleastus", "workspacename" : "aksamleastusws"},"southcentralus": {"azureregion": "southcentralus", "azureresourcegroup" : "aksdplyamlsouthctrl", "workspacename" : "aksamlsthctrlusws" },"westus2": {"azureregion": "westus2", "azureresourcegroup" : "aksdplyamlwestus", "workspacename" : "aksamlwestus2ws"}}
 
   steps:
   - script: echo Hello, AKSDeployment!
