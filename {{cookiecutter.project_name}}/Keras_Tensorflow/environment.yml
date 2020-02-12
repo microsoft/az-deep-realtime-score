@@ -22,6 +22,7 @@ dependencies:
   - azure-core
   - keras==2.2.0
   - azureml-core==1.0.57
+  - azureml-contrib==1.0.57
   - locustio==0.11.0
   - prompt-toolkit==2.0.9
   - git+https://github.com/microsoft/AI-Utilities.git
