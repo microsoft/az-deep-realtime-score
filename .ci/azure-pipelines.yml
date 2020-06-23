@@ -1,5 +1,12 @@
 # Pipeline for testing AKSDeploymentTutorialAML
 
+resources:
+  repositories:
+    - repository: aitemplates
+      type: github
+      name: microsoft/AI
+      endpoint: AIArchitecturesAndPractices-GitHub
+
 trigger:
   batch: true
   branches:
@@ -23,84 +30,82 @@ jobs:
   - script: echo Hello, AKSDeployment!
     displayName: 'Builds source for AKSDeploymentTutorialAML/Keras_Tensorflow'
 
-  - bash: |
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow
-      conda env create -f environment.yml
-      source activate deployment_aml
-      conda env list
-      echo Login Azure Account
+  - template: .ci/steps/config_conda.yml@aitemplates
+    parameters:
+      conda_location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscription) 
+      conda: deployment_aml
 
-      az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
-      az account set --subscription $(subscriptionid)
-    displayName: 'Build Configuration'
+  - template: .ci/steps/azpapermill.yml@aitemplates
+    parameters:
+      notebook: 00_AMLSetup.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscription)
+      conda: deployment_aml
+      azure_subscription: $(subscriptionid)
+      azureresourcegroup: $(azureresourcegroup)
+      workspacename: $(workspacename)
+      azureregion: $(azureregion)
+      aksimagename: 'modelimg'
 
-  - bash: |
-      source activate deployment_aml
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow
-      papermill 00_AMLSetup.ipynb 00_AMLSetup_output.ipynb \
-                --log-output \
-                --no-progress-bar \
-                -k python3 \
-                -p resource_group $(azureresourcegroup) \
-                -p workspace_name $(workspacename) \
-                -p workspace_region  $(azureregion) \
-                -p subscription_id $(subscriptionid) \
-                -p image_name 'modelimg'
-    displayName : '00_AMLSetup.ipynb'
-  - template: steps/papermill.yml
+  - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
       notebook: 01_DevelopModel.ipynb
       location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
-  - template: steps/papermill.yml
+      azureSubscription: $(subscription)
+      conda: deployment_aml
+      azure_subscription: $(subscriptionid)
+
+  - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
       notebook: 02_DevelopModelDriver.ipynb
       location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
-  - template: steps/papermill.yml
+      azureSubscription: $(subscription)
+      conda: deployment_aml
+      azure_subscription: $(subscriptionid)
+
+  - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
       notebook: 03_BuildImage.ipynb
       location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
-  - bash: |
-      source activate deployment_aml
-      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-      cd {{cookiecutter.project_name}}/Keras_Tensorflow/aks
-      papermill 04_DeployOnAKS.ipynb 04_DeployOnAKS_output.ipynb \
-                --log-output \
-                --no-progress-bar \
-                -k python3 \
-                -p aks_name 'aksdeployamlaks' \
-                -p aks_service_name 'aksamlsvc' \
-                -p aks_location $(azureregion)
-      sleep 1m
-    displayName : '04_DeployOnAKS.ipynb'
-  - template: steps/papermill.yml
+      azureSubscription: $(subscription)
+      conda: deployment_aml
+      azure_subscription: $(subscriptionid)
+
+  - template: .ci/steps/azpapermill.yml@aitemplates
+    parameters:
+      notebook: aks/04_DeployOnAKS.ipynb
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscriptionid)
+      conda: deployment_aml
+      aks_name: 'aksdeployamlaks'
+      aks_location: $(azureregion)
+      aks_service_name: 'aksamlsvc'
+      python_path: "/{{cookiecutter.project_name}}/Keras_Tensorflow"
+
+  - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
       notebook: 05_TestWebApp.ipynb
-      location: "{{cookiecutter.project_name}}/Keras_Tensorflow/aks"
-  - template: steps/papermill.yml
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscription)
+      conda: deployment_aml
+      azure_subscription: $(subscriptionid)
+
+  - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
       notebook: 06_SpeedTestWebApp.ipynb
-      location: "{{cookiecutter.project_name}}/Keras_Tensorflow/aks"
-#  - bash: |
-#      source activate deployment_aml
-#      export PYTHONPATH=$(pwd)/{{cookiecutter.project_name}}/Keras_Tensorflow:${PYTHONPATH}
-#      cd {{cookiecutter.project_name}}/Keras_Tensorflow/iotedge
-#      papermill 04_DeployOnIOTedge.ipynb 04_DeployOnIOTedge_output.ipynb \
-#      	--log-output \
-#      	--no-progress-bar \
-#      	-k python3 \
-#      	-p iot_hub_name fstlstnameiothub \
-#      	-p device_id mygpudevice \
-#      	-p module_name mygpumodule
-#    displayName: '04_DeployOnIOTedge.ipynb'
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscription)
+      conda: deployment_aml
+      azure_subscription: $(subscriptionid)
 
-  - template: steps/papermill.yml
+  - template: .ci/steps/azpapermill.yml@aitemplates
     parameters:
       notebook: 07_TearDown.ipynb
-      location: "{{cookiecutter.project_name}}/Keras_Tensorflow/aks"
-#  - template: steps/papermill.yml
-#    parameters:
-#      notebook: 05_TearDown.ipynb
-#      location: "{{cookiecutter.project_name}}/Keras_Tensorflow/iotedge"
+      location: "{{cookiecutter.project_name}}/Keras_Tensorflow"
+      azureSubscription: $(subscription)
+      conda: deployment_aml
+
   - bash: |
       echo Remove All Docker Containers
       docker stop $(docker ps -a -q)
@@ -139,3 +144,4 @@ jobs:
         Description=Branch: Branch $(Build.SourceBranch) failed to build. Go to Boards>WorkItems and tag the failure type.
     displayName: 'Create work item on failure'
     condition: failed()
+
